@@ -1,2 +1,2 @@
-# SQL-InforLawson
-Infor Lawson SQL Queries
+# SQL-Peoplesoft
+Peoplesoft SQL Queries
