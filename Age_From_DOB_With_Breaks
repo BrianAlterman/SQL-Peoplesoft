@@ -1,0 +1,23 @@
+SELECT emp.EMPLID                                                         AS "EIN",
+  emp.BIRTHDATE                                                           AS "Date of Birth",
+  ROUND((to_date('31-DEC-2016', 'DD-MON-YYYY') - emp.BIRTHDATE)/365.25,2) AS "Age",
+  CASE
+    WHEN (to_date('31-DEC-2016', 'DD-MON-YYYY') - emp.BIRTHDATE)/365.25 < 25
+    THEN 'Younger than 25'
+    WHEN (to_date('31-DEC-2016', 'DD-MON-YYYY') - emp.BIRTHDATE)/365.25 >= 25
+    AND (to_date('31-DEC-2016', 'DD-MON-YYYY')  - emp.BIRTHDATE)/365.25  < 35
+    THEN '25 - 34'
+    WHEN (to_date('31-DEC-2016', 'DD-MON-YYYY') - emp.BIRTHDATE)/365.25 >= 35
+    AND (to_date('31-DEC-2016', 'DD-MON-YYYY')  - emp.BIRTHDATE)/365.25  < 45
+    THEN '35 - 44'
+    WHEN (to_date('31-DEC-2016', 'DD-MON-YYYY') - emp.BIRTHDATE)/365.25 >= 45
+    AND (to_date('31-DEC-2016', 'DD-MON-YYYY')  - emp.BIRTHDATE)/365.25  < 55
+    THEN '45 - 54'
+    WHEN (to_date('31-DEC-2016', 'DD-MON-YYYY') - emp.BIRTHDATE)/365.25 >= 55
+    AND (to_date('31-DEC-2016', 'DD-MON-YYYY')  - emp.BIRTHDATE)/365.25  < 65
+    THEN '55 - 64'
+    WHEN (to_date('31-DEC-2016', 'DD-MON-YYYY') - emp.BIRTHDATE)/365.25 BETWEEN 65 AND 999
+    THEN '65 and Older'
+    ELSE NULL
+  END AS "Age Grouping"
+FROM PS_EMPLOYEES emp;
