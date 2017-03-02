@@ -1,0 +1,60 @@
+-- seven years of reviews, masked to where current year is poor performer
+SELECT emp.emplid AS "EIN",
+  emp.name        AS "Name",
+  "Rating 2016",
+  "Rating 2015",
+  "Rating 2014",
+  "Rating 2013",
+  "Rating 2012 (Old Scale)",
+  "Rating 2011 (Old Scale)",
+  "Rating 2010 (Old Scale)"
+FROM PS_EMPLOYEES emp,
+  (SELECT rev.emplid  AS "EIN2017",
+    rev.review_rating AS "Rating 2016"
+  FROM PS_EMPLOYEE_REVIEW rev
+  WHERE rev.effdt        = '01-JAN-2017'
+  AND rev.review_rating IN ('4','5')
+  ),
+  (SELECT rev.emplid  AS "EIN2016",
+    rev.review_rating AS "Rating 2015"
+  FROM PS_EMPLOYEE_REVIEW rev
+  WHERE rev.effdt        = '01-JAN-2016'
+  AND rev.review_rating IN ('1','2','3','4','5')
+  ),
+  (SELECT rev.emplid  AS "EIN2015",
+    rev.review_rating AS "Rating 2014"
+  FROM PS_EMPLOYEE_REVIEW rev
+  WHERE rev.effdt        = '01-JAN-2015'
+  AND rev.review_rating IN ('1','2','3','4','5')
+  ),
+  (SELECT rev.emplid  AS "EIN2014",
+    rev.review_rating AS "Rating 2013"
+  FROM PS_EMPLOYEE_REVIEW rev
+  WHERE rev.effdt BETWEEN '1-JAN-14' AND '31-DEC-14'
+  AND rev.review_rating IN ('1','2','3','4','5')
+  ),
+  (SELECT rev.emplid  AS "EIN2013",
+    rev.review_rating AS "Rating 2012 (Old Scale)"
+  FROM PS_EMPLOYEE_REVIEW rev
+  WHERE rev.effdt        = '01-JAN-2013'
+  AND rev.review_rating IN ('1','2','3','4','5')
+  ),
+  (SELECT rev.emplid  AS "EIN2012",
+    rev.review_rating AS "Rating 2011 (Old Scale)"
+  FROM PS_EMPLOYEE_REVIEW rev
+  WHERE rev.effdt        = '01-JAN-2012'
+  AND rev.review_rating IN ('1','2','3','4','5')
+  ),
+  (SELECT rev.emplid  AS "EIN2011",
+    rev.review_rating AS "Rating 2010 (Old Scale)"
+  FROM PS_EMPLOYEE_REVIEW rev
+  WHERE rev.effdt        = '01-MAR-2011'
+  AND rev.review_rating IN ('1','2','3','4','5')
+  )
+WHERE emp.emplid = "EIN2017"
+AND emp.emplid   = "EIN2016" (+)
+AND emp.emplid   = "EIN2015" (+)
+AND emp.emplid   = "EIN2014" (+)
+AND emp.emplid   = "EIN2013" (+)
+AND emp.emplid   = "EIN2012" (+)
+AND emp.emplid   = "EIN2011" (+)
