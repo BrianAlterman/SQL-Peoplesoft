@@ -1,0 +1,20 @@
+--Tis query will pull the most recent termination prior to the most recent rehire of an OA
+SELECT bas.emplid AS "EIN",
+  bas.jobcode     AS "Job Code",
+  bas.effdt       AS "Effective Date",
+  bas.action      AS "Action"
+FROM PS_JOB bas
+WHERE effdt =
+  (SELECT MAX(effdt)
+  FROM PS_JOB bas2
+  WHERE bas.emplid = bas2.emplid
+  AND action       = 'TER'
+  AND effdt    <
+    (SELECT MAX(effdt)
+    FROM PS_JOB bas3
+    WHERE bas3.emplid = bas2.emplid
+    AND action       = 'REH'
+    )
+  ) 
+  and bas.action = 'TER'
+  and emplid in ('273830')
