@@ -1,0 +1,89 @@
+-- If either branch or military status indicates veteran, then veteran
+-- If neither indicates veteran then look for veteran spouse
+SELECT DISTINCT(peo.emplid) AS "EIN",
+  peo.name                  AS "OA Name",
+  peo.military_status       AS "Military Status Code",
+  "MILDESC"                 AS "Military Status Description",
+  CASE
+    WHEN peo.military_status IN ('3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','J','K','L','M','O','P','Q','R','S','T','U','V','W','Y')
+    THEN 'VETERAN'
+    WHEN (peo.military_status IN ('$','1','2','I','N','X','Z')
+    OR peo.military_status    IS NULL
+    OR peo.military_status     = ' ')
+    THEN 'NOT VETERAN'
+    ELSE 'ERROR'
+  END                    AS "Status Translation",
+  mil.fdc_miltary_spouse AS "Military Spouse Code",
+  "SPDESC"               AS "Military Spouse Description",
+  CASE
+    WHEN mil.fdc_miltary_spouse IN ('Y')
+    THEN 'VETERAN SPOUSE'
+    WHEN (mil.fdc_miltary_spouse IN ('C','N')
+    OR mil.fdc_miltary_spouse    IS NULL
+    OR mil.fdc_miltary_spouse     = ' ')
+    THEN 'NOT SPOUSE'
+    ELSE 'ERROR'
+  END                   AS "Spouse Translation",
+  mil.fdc_mil_srvc_brch AS "Military Branch Code",
+  "BRDESC"              AS "Military Branch Description",
+  CASE
+    WHEN (mil.fdc_mil_srvc_brch IN ('N','A')
+    OR mil.fdc_mil_srvc_brch     = ' '
+    OR mil.fdc_mil_srvc_brch    IS NULL)
+    THEN 'NOT VETERAN'
+    WHEN mil.fdc_mil_srvc_brch IN ('B','C','D','E','F','G','H','I','J','K','L','M')
+    THEN 'VETERAN'
+    ELSE 'ERROR'
+  END AS "Branch Translation",
+  --The following case statement determines how the combination of these preceeding three fields should be compiled to proived the single code
+  CASE
+    WHEN (peo.military_status IN ('3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','J','K','L','M','O','P','Q','R','S','T','U','V','W','Y')
+    OR mil.fdc_mil_srvc_brch  IN ('B','C','D','E','F','G','H','I','J','K','L','M'))
+    THEN 'VETERAN'
+    WHEN (peo.military_status NOT IN ('3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','J','K','L','M','O','P','Q','R','S','T','U','V','W','Y')
+    AND mil.fdc_mil_srvc_brch NOT IN ('B','C','D','E','F','G','H','I','J','K','L','M')
+    AND mil.fdc_miltary_spouse    IN ('Y'))
+    THEN 'VETERAN SPOUSE'
+    ELSE NULL
+  END AS "Compiled Code"
+FROM sysadm.ps_employees peo,
+  (SELECT o.fieldvalue AS "SPNAME",
+    o.xlatlongname     AS "SPDESC"
+  FROM sysadm.psxlatitem o
+  WHERE o.fieldname= 'FDC_MILTARY_SPOUSE'
+  AND o.effdt      =
+    (SELECT MAX(s.effdt)
+    FROM sysadm.psxlatitem s
+    WHERE s.fieldvalue = o.fieldvalue
+    AND s.fieldname    = 'FDC_MILTARY_SPOUSE'
+    )
+  ) ,
+  (SELECT o.fieldvalue AS "MILNAME",
+    o.xlatlongname     AS "MILDESC"
+  FROM sysadm.psxlatitem o
+  WHERE o.fieldname= 'MILITARY_STATUS'
+  AND o.effdt      =
+    (SELECT MAX(s.effdt)
+    FROM sysadm.psxlatitem s
+    WHERE s.fieldvalue = o.fieldvalue
+    AND s.fieldname    = 'MILITARY_STATUS'
+    )
+  ),
+  (SELECT o.fieldvalue AS "BRNAME",
+    o.xlatlongname     AS "BRDESC"
+  FROM sysadm.psxlatitem o
+  WHERE o.fieldname= 'FDC_MIL_SRVC_BRCH'
+  AND o.effdt      =
+    (SELECT MAX(s.effdt)
+    FROM sysadm.psxlatitem s
+    WHERE s.fieldvalue = o.fieldvalue
+    AND s.fieldname    = 'FDC_MIL_SRVC_BRCH'
+    )
+  ) ,
+  sysadm.ps_fdc_data_usa mil
+WHERE peo.military_status  = "MILNAME" (+)
+AND mil.fdc_miltary_spouse = "SPNAME" (+)
+AND mil.fdc_mil_srvc_brch  = "BRNAME" (+)
+AND mil.emplid (+)         = peo.emplid
+AND peo.country            = 'USA'
+  --AND peo.emplid             = '043872'
