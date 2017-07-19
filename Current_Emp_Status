@@ -1,0 +1,17 @@
+SELECT distinct(bas.emplid) AS "EIN",
+  bas.effdt as "Assign Start",
+  emp.EMPL_STATUS "Status",
+  tr.xlatlongname "Status Description"
+FROM PS_JOB bas,
+  PS_EMPLOYEES emp,
+  PSXLATITEM tr
+WHERE bas.effdt =
+  (SELECT MAX(bas2.effdt)
+  FROM PS_JOB bas2
+  WHERE bas2.emplid = bas.emplid
+  AND bas2.effdt   <= TRUNC(sysdate)
+  )
+AND emp.emplid = bas.emplid 
+and tr.fieldname = 'EMPL_STATUS'
+and emp.empl_status = tr.fieldvalue
+--and bas.emplid         = '278401'
