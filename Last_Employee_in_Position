@@ -1,0 +1,42 @@
+SELECT
+    jobs.emplid AS "EIN",
+    per.name,
+    --jobs.effdt AS "Effective Date",
+    jobs.position_nbr AS "Pos Number",
+    "Position Description",
+    jobs.supervisor_id AS "Supervisor",
+    per2.name
+FROM
+    ps_job jobs,
+    ps_personal_data per,
+    ps_personal_data per2,
+    (
+        SELECT
+            spos.position_nbr AS "SUBPOS",
+            spos.descr AS "Position Description"
+        FROM
+            ps_position_data spos
+        WHERE
+            spos.eff_status = 'A'
+            AND   spos.ac_non_empl_pos = 'N'
+            AND   spos.effdt = (
+                SELECT
+                    MAX(effdt)
+                FROM
+                    ps_position_data spos2
+                WHERE
+                    spos.position_nbr = spos2.position_nbr
+            )
+    )
+WHERE
+    per.emplid = jobs.emplid
+    AND   "SUBPOS" = jobs.position_nbr
+    AND   jobs.effdt = (
+        SELECT
+            MAX(jobss.effdt)
+        FROM
+            ps_job jobss
+        WHERE
+            jobs.position_nbr = jobss.position_nbr
+    )
+    AND   jobs.supervisor_id = per2.emplid
