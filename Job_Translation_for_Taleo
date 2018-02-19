@@ -1,0 +1,18 @@
+select jobc.jobcode as "Job Code", 
+       jobc.Descr as "Job Description",
+       jobf.job_family as "Disc Family",
+       jobf.descr as "Discipline Description",
+       jobf.ac_family as "AC Family", 
+       acf.DESCR as "AC Family Description"
+from   PS_JOBCODE_TBL jobc,
+       PS_job_FAMILY_TBL jobf,
+       PS_AC_FAMILY_TBL acf
+where  jobf.job_family = jobc.job_family
+and    jobf.ac_family = jobc.ac_family
+and    jobc.ac_family = acf.ac_family
+and    jobc.effdt = (Select max(jobc1.effdt) 
+                     from PS_JOBCODE_TBL jobc1 
+                     where jobc.jobcode = jobc1.jobcode)
+and    jobc.jobcode in( '81548','10993','10994','10995','11035',
+                        '367120','022429','022349','022129',
+                        '12358','81405');   
