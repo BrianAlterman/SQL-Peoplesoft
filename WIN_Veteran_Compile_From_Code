@@ -36,12 +36,12 @@ FROM
                     a.fieldvalue AS "LK2VALUE",
                     a.xlatlongname AS "LK2DESC",
                     CASE
-                            WHEN a.fieldvalue = '1' THEN 'NO'
-                            WHEN a.fieldvalue = 'F' THEN 'SPOUSE'
-                            WHEN a.fieldvalue = 'G' THEN 'YES'
-                            WHEN a.fieldvalue = 'H' THEN 'SPOUSE'
-                            WHEN a.fieldvalue = 'I' THEN 'YES'
-                            WHEN a.fieldvalue = 'X' THEN 'NO'
+                            WHEN a.fieldvalue = '1' THEN 'NO'     --Not indicated
+                            WHEN a.fieldvalue = 'F' THEN 'SPOUSE' --Active Military Spouse
+                            WHEN a.fieldvalue = 'G' THEN 'YES'    --Active Guard/Reserve
+                            WHEN a.fieldvalue = 'H' THEN 'SPOUSE' --Veteran Spouse
+                            WHEN a.fieldvalue = 'I' THEN 'YES'    --Veteran
+                            WHEN a.fieldvalue = 'X' THEN 'NO'     --Not a Veteran
                             ELSE 'ERROR'
                         END
                     AS "LK2YN"
@@ -57,17 +57,17 @@ FROM
                     b.fieldvalue AS "LK1VALUE",
                     b.xlatlongname AS "LK1DESC",
                     CASE
-                            WHEN b.fieldvalue = '1' THEN 'NO'
-                            WHEN b.fieldvalue = '4' THEN 'YES'
-                            WHEN b.fieldvalue = 'A' THEN 'YES'
-                            WHEN b.fieldvalue = 'C' THEN 'YES'
-                            WHEN b.fieldvalue = 'D' THEN 'YES'
-                            WHEN b.fieldvalue = 'O' THEN 'YES'
-                            WHEN b.fieldvalue = 'R' THEN 'YES'
-                            WHEN b.fieldvalue = 'S' THEN 'YES'
-                            WHEN b.fieldvalue = 'T' THEN 'YES'
-                            WHEN b.fieldvalue = 'X' THEN 'NO'
-                            WHEN b.fieldvalue = 'Z' THEN 'YES'
+                            WHEN b.fieldvalue = '1' THEN 'NO'     --Not indicated
+                            WHEN b.fieldvalue = '4' THEN 'YES'    --Active Wartime/Camp Badge Vet
+                            WHEN b.fieldvalue = 'A' THEN 'YES'    --Armed Forces Service Medal Vet
+                            WHEN b.fieldvalue = 'C' THEN 'YES'    --Separated/Srvc Medal/Other Vet
+                            WHEN b.fieldvalue = 'D' THEN 'YES'    --Protected Vet/Not Classified
+                            WHEN b.fieldvalue = 'O' THEN 'YES'    --Service Medal & Other Vet
+                            WHEN b.fieldvalue = 'R' THEN 'YES'    --Recently Separated Veteran
+                            WHEN b.fieldvalue = 'S' THEN 'YES'    --Separated & Service Medal Vet
+                            WHEN b.fieldvalue = 'T' THEN 'YES'    --Separated & Other Vet
+                            WHEN b.fieldvalue = 'X' THEN 'NO'     --Not a Veteran
+                            WHEN b.fieldvalue = 'Z' THEN 'YES'    --Not a Protected Veteran
                             ELSE 'ERROR'
                         END
                     AS "LK1YN"
