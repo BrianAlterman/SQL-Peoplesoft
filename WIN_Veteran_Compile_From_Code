@@ -1,0 +1,83 @@
+SELECT
+    "EIN",
+    "Full Name",
+    "Disabled Vet",
+    "Veteran Status",
+    "Veteran Description",
+    "Veteran (TYPE)",
+    "Military Status",
+    "Military Description",
+    "Military (TYPE)",
+    CASE
+            WHEN "Disabled Vet" = 'Y'         THEN 'Veteran'
+            WHEN "Veteran (TYPE)" = 'YES'     THEN 'Veteran'
+            WHEN "Military (TYPE)" = 'YES'    THEN 'Veteran'
+            WHEN "Military (TYPE)" = 'SPOUSE' THEN 'Veteran Spouse'
+            ELSE 'Not Affiliated'
+        END
+    AS "FINAL VETERAN STATUS"
+FROM
+    (
+        SELECT
+            emp.emplid AS "EIN",
+            emp.name AS "Full Name",
+            emp.disabled_vet AS "Disabled Vet",
+            emp.military_status AS "Veteran Status",
+            "LK1DESC" AS "Veteran Description",
+            "LK1YN" AS "Veteran (TYPE)",
+            emp.win_military_stat AS "Military Status",
+            "LK2DESC" AS "Military Description",
+            "LK2YN" AS "Military (TYPE)"
+        FROM
+            ps_win_empls_vw emp,
+            (
+                SELECT
+                    a.fieldname AS "LK2FIELD",
+                    a.fieldvalue AS "LK2VALUE",
+                    a.xlatlongname AS "LK2DESC",
+                    CASE
+                            WHEN a.fieldvalue = '1' THEN 'NO'
+                            WHEN a.fieldvalue = 'F' THEN 'SPOUSE'
+                            WHEN a.fieldvalue = 'G' THEN 'YES'
+                            WHEN a.fieldvalue = 'H' THEN 'SPOUSE'
+                            WHEN a.fieldvalue = 'I' THEN 'YES'
+                            WHEN a.fieldvalue = 'X' THEN 'NO'
+                            ELSE 'ERROR'
+                        END
+                    AS "LK2YN"
+                FROM
+                    psxlatitem a
+                WHERE
+                    a.fieldname = 'WIN_MILITARY_STAT'
+                    AND   a.eff_status = 'A'
+            ),
+            (
+                SELECT
+                    b.fieldname AS "LK1FIELD",
+                    b.fieldvalue AS "LK1VALUE",
+                    b.xlatlongname AS "LK1DESC",
+                    CASE
+                            WHEN b.fieldvalue = '1' THEN 'NO'
+                            WHEN b.fieldvalue = '4' THEN 'YES'
+                            WHEN b.fieldvalue = 'A' THEN 'YES'
+                            WHEN b.fieldvalue = 'C' THEN 'YES'
+                            WHEN b.fieldvalue = 'D' THEN 'YES'
+                            WHEN b.fieldvalue = 'O' THEN 'YES'
+                            WHEN b.fieldvalue = 'R' THEN 'YES'
+                            WHEN b.fieldvalue = 'S' THEN 'YES'
+                            WHEN b.fieldvalue = 'T' THEN 'YES'
+                            WHEN b.fieldvalue = 'X' THEN 'NO'
+                            WHEN b.fieldvalue = 'Z' THEN 'YES'
+                            ELSE 'ERROR'
+                        END
+                    AS "LK1YN"
+                FROM
+                    psxlatitem b
+                WHERE
+                    b.fieldname = 'WIN_VETERAN_STATUS'
+                    AND   b.eff_status = 'A'
+            )
+        WHERE
+            emp.military_status = "LK1VALUE" (+)
+            AND   emp.win_military_stat = "LK2VALUE" (+)
+    )
