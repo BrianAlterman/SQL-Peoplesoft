@@ -1,0 +1,23 @@
+--All records
+select * from ps_ac_email_rngr_h
+;
+
+--All emails of a specific subject
+SELECT A.AC_EMAIL_SEQNO, 
+A.EMPLID, 
+A.AC_EMAIL_TO, 
+A.AC_EMAIL_CC, 
+A.AC_EMAIL_FROM, 
+A.AC_EMAIL_SUBJECT, 
+A.AC_EMAIL_SENT, 
+A.AC_EMAIL_TEXT, 
+TO_CHAR(A.DATE_SENT,'YYYY-MM-DD')
+FROM PS_AC_EMAIL_RNGR_H A
+WHERE ( A.AC_EMAIL_SUBJECT = 'Windstream Glassdoor Survey Request')
+;
+--All emails to a specific user
+select count(ac_email_seqno), AC_email_subject
+from ps_ac_email_rngr_h
+where upper(AC_EMAIL_TO) = 'BRIAN.ALTERMAN@WINDSTREAM.COM'
+group by ac_email_subject
+;
