@@ -1,0 +1,37 @@
+SELECT
+    emp.emplid AS "Employee #",
+    emp.position_nbr AS "Position #",
+    emp.name AS "Employee Name",
+    NULL AS "Flight Plan",
+    emp.jobtitle as "Job Title",
+    NULL AS "Region",
+    emp.ac_mailloc_descr as "Location",
+    emp.ac_super_name AS "Manager",
+    emp.orig_hire_dt AS "Hire Date",
+    emp2.rehire_dt as "Rehire Date", 
+    emp.job_entry_dt AS "Entry Date",
+    NULL AS "Resignation Date",
+    NULL AS "Term Date: Last Day on Payroll",
+    NULL AS "Time with WIN",
+    NULL AS "Additional Information",
+    NULL AS "Last Payroll Month",
+    pos.ac_ext_lvl02_name AS "AC_EXT_LVL02_NA",
+    pos.ac_ext_lvl03_name AS "AC_EXT_LVL03_NA",
+    pos.ac_ext_lvl04_name AS "AC_EXT_LVL04_NA",
+    pos.ac_ext_lvl05_name AS "AC_EXT_LVL05_NA",
+    NULL AS "YTD Attainment",
+    NULL AS "Conversions",
+    NULL AS "Renewals",
+    NULL AS "TBR",
+    NULL AS "Corrective Action",
+    NULL AS "Term Code",
+    NULL AS "Term Reason",
+    NULL AS "New Company"
+FROM
+    ps_employees emp,
+    ps_ac_repts_to_lvl pos,
+    ps_ac_all_empls emp2
+WHERE
+    pos.emplid (+) = emp.emplid
+    and emp.emplid = emp2.emplid
+    AND   pos.ac_ext_lvl02_name = 'SHAWN M MURRAY';
