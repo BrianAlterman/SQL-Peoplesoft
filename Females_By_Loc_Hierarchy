@@ -1,0 +1,48 @@
+SELECT
+    peo.emplid AS "EIN",
+    peo.name AS "Full Name",
+    ema.ac_email AS "Email Address",
+    peo.jobtitle AS "Job Title",
+    loc.descr as "Location",
+    loc.city as "City",
+    loc.state as "State",
+    pos.ac_level01_emplid as "L1 EIN",
+    pos.ac_ext_lvl01_name AS "L1 Name",
+    pos.ac_level02_emplid as "L2 EIN",
+    pos.ac_ext_lvl02_name AS "L2 Name",
+    pos.ac_level03_emplid as "L3 EIN",
+    pos.ac_ext_lvl03_name AS "L3 Name",
+    pos.ac_level04_emplid as "L4 EIN",
+    pos.ac_ext_lvl04_name AS "L4 Name",
+    pos.ac_level05_emplid as "L5 EIN",
+    pos.ac_ext_lvl05_name AS "L5 Name",
+    pos.ac_level06_emplid as "L6 EIN",
+    pos.ac_ext_lvl06_name AS "L6 Name",
+    pos.ac_level07_emplid as "L7 EIN",
+    pos.ac_ext_lvl07_name AS "L7 Name",
+    pos.ac_level08_emplid as "L8 EIN",
+    pos.ac_ext_lvl08_name AS "L8 Name",
+    pos.ac_level09_emplid as "L9 EIN",
+    pos.ac_ext_lvl09_name AS "L9 Name",
+    pos.ac_level10_emplid as "L10 EIN",
+    pos.ac_ext_lvl10_name AS "L10 Name"
+FROM
+    ps_employees peo,
+    ps_ac_repts_to_lvl pos,
+    ps_AC_NSPOS_INC_VW pinc,
+    ps_location_tbl loc,
+    ps_ac_email_tbl ema
+WHERE
+    peo.emplid = ema.emplid (+)
+    and pinc.position_nbr (+) = peo.position_nbr
+    and pinc.location = loc.location
+    and pos.emplid (+) = peo.emplid
+    and loc.effdt = (select max(loc2.effdt) 
+                     from ps_location_tbl loc2 
+                     where loc2.location = loc.location)
+    and (loc.city in ('Little Rock', 'N Little Rock', 'North Little Rock', 
+                      'Charlotte', 'Charlotte NC', 'Matthews',
+                      'Rochester', 'East Rochester', 'Twinsburg', 'Hiawatha')
+            or (loc.city = 'Greenville' and Loc.state='SC'))
+    --AND peo.emplid = '0182265'
+    and peo.sex = 'F';
