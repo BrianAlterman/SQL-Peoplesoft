@@ -1,0 +1,111 @@
+SELECT
+    *
+FROM
+    (
+        SELECT
+            unique(NULL) AS "Weight",       --Null/User Provides
+            NULL AS "Length",               --Null/User Provides
+            NULL AS "Width",                --Null/User Provides
+            NULL AS "Height",               --Null/User Provides
+            'WINDSTREAM' AS "Company",
+            peo.first_name
+            || ' '
+            || peo.middle_name
+            || ' '
+            || peo.last_name AS "Contact Name",
+            adr.address1 AS "Address1",
+            adr.address2 AS "Address2",
+            adr.city AS "City",
+            adr.state AS "State",
+            adr.postal AS "Zip",
+            adr.country AS "Country",
+            peo.home_phone AS "Telephone",
+            ema.ac_email AS "Email Address",
+            NULL AS "Service Type",         --Null/User Provides
+            NULL AS "Saturday Delivery",    --Null/User Provides
+            NULL AS "PkgType",              --Null/User Provides
+            NULL AS "BillTransportationTo", --Null/User Provides
+            NULL AS "HandlingCharge",       --Null/User Provides
+            NULL AS "Invoice#",             --Null/User Provides
+            peo.first_name
+            || ' '
+            || peo.middle_name
+            || ' '
+            || peo.last_name AS "Reference1",
+            EXTRACT(YEAR FROM(current_date) ) - EXTRACT(YEAR FROM peo.service_dt) AS "Reference2",
+            peo.service_dt AS "Reference3",
+            TO_CHAR(peo.service_dt,'Month') AS "Month",
+            NULL AS "ThirdPartyAcct",       --Null/User Provides
+            peo.business_title AS "Job Title",
+            peo.ac_mail_location AS "Location Code",
+            peo.ac_mailloc_descr AS "Location Name",
+            "Street1",
+            "Street2",
+            "W_City",
+            "W_State",
+            "Zip/Postal",
+            "County",
+            "W_Country",
+            peo.emplid
+        FROM
+            ps_employees peo,
+            ps_ac_email_tbl ema,
+            ps_addresses adr,
+            (
+                SELECT
+                    loc.location AS "Location",
+                    loc.address1 AS "Street1",
+                    loc.address2 AS "Street2",
+                    loc.city AS "W_City",
+                    loc.state AS "W_State",
+                    loc.postal AS "Zip/Postal",
+                    loc.county AS "County",
+                    loc.country AS "W_Country"
+                FROM
+                    ps_location_tbl loc
+                WHERE
+                    loc.effdt = (
+                        SELECT
+                            MAX(loca.effdt)
+                        FROM
+                            ps_location_tbl loca
+                        WHERE
+                            loca.location = loc.location
+                    )
+                    AND loc.eff_status = 'A'
+            )
+        WHERE
+            ema.emplid (+) = peo.emplid
+            AND adr.emplid (+) = peo.emplid
+            AND adr.effdt = (
+                SELECT
+                    MAX(adr2.effdt)
+                FROM
+                    ps_addresses adr2
+                WHERE
+                    adr2.emplid = peo.emplid
+                    AND adr2.address_type = 'HOME'
+            )
+            AND peo.ac_mail_location = "Location" (+)
+            AND adr.address_type = 'HOME'
+    )
+WHERE
+    "Reference2" IN (
+        '1',
+        '5',
+        '10',
+        '15',
+        '20',
+        '25',
+        '30',
+        '35',
+        '40',
+        '45',
+        '50',
+        '55',
+        '60',
+        '65',
+        '70'
+    )
+    --AND peo.emplid in ('0167978','0173245','0172108','0172908')
+    ;
