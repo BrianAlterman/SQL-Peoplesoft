@@ -1,0 +1,99 @@
+/* Are you able to pull a report for me of all employees in the following markets – I just 
+need email address and maybe Manager and below? I will need to manually go in and take some 
+out for because of Union stuff I believe. 
+Lincoln NE
+Beatrice NE
+Big Lake MN
+Knoxville IA
+Export PA
+Ephrata PA
+Fairfield TX
+Merkel TX
+Texarkana TX
+Broken Arrow OK
+Dumas TX
+Rio Vista, TX
+Lexington, KY
+Elizabethtown, KY
+Baldwin GA
+Moultrie GA
+Hobbs NM
+Lexington SC
+Leeds AL
+Sanford NC
+Harrison AR
+Lexington SC
+Hudson OH
+Matthews NC
+Charlotte NC - Added as per Andrea
+*/
+select emp.emplid as "EIN",
+       emp.name as "Full Name", 
+       ema.ac_email AS "Email Address",
+       emp.supervisor_id as "Supervisor EIN",
+       emp2.name as "Supervisor Name",
+       emp.union_cd as "Union Code",
+       emp.barg_unit as "Bargaining Unit",
+       emp.jobtitle as "Job Title",
+       emp.deptname as "Department Name",
+       emp.location as "Loc Code",
+       emp.location_name as "Location",
+       "W_City" as "City",
+       "W_State" as "State"
+       from PS_employees emp,
+       PS_employees emp2,
+       ps_ac_email_tbl ema,
+        (
+                SELECT
+                    loc.location AS "Location",
+                    loc.address1 AS "Street1",
+                    loc.address2 AS "Street2",
+                    loc.city AS "W_City",
+                    loc.state AS "W_State",
+                    loc.postal AS "Zip/Postal",
+                    loc.county AS "County",
+                    loc.country AS "W_Country"
+                FROM
+                    ps_location_tbl loc
+                WHERE
+                    loc.effdt = (
+                        SELECT
+                            MAX(loca.effdt)
+                        FROM
+                            ps_location_tbl loca
+                        WHERE
+                            loca.location = loc.location
+                    )
+                    AND loc.eff_status = 'A'
+            )
+where emp2.emplid (+) = emp.supervisor_id
+AND emp.ac_mail_location = "Location" (+)
+and ema.emplid (+) = emp.emplid
+--and emp.emplid = '0182265'
+and (("W_City" = 'Charlotte' and "W_State" = 'NC')
+or ("W_City" = 'Matthews' and "W_State" = 'NC')
+or ("W_City" = 'Hudson' and "W_State" = 'OH')
+or ("W_City" = 'Lexington' and "W_State" = 'SC')
+or ("W_City" = 'Harrison' and "W_State" = 'AR')
+or ("W_City" = 'Sanford' and "W_State" = 'NC')
+or ("W_City" = 'Leeds' and "W_State" = 'AL')
+or ("W_City" = 'Hobbs' and "W_State" = 'NM')
+or ("W_City" = 'Moultrie' and "W_State" = 'GA')
+or ("W_City" = 'Lexington' and "W_State" = 'KY')
+or ("W_City" = 'Baldwin' and "W_State" = 'GA')
+or ("W_City" = 'Lexington' and "W_State" = 'KY')
+or ("W_City" = 'Elizabethtown' and "W_State" = 'KY')
+or ("W_City" = 'Rio Vista' and "W_State" = 'TX')
+or ("W_City" = 'Dumas' and "W_State" = 'TX')
+or ("W_City" = 'Texarkana' and "W_State" = 'TX')
+or ("W_City" = 'Merkel' and "W_State" = 'TX')
+or ("W_City" = 'Fairfield' and "W_State" = 'TX')
+or ("W_City" = 'Broken Arrow' and "W_State" = 'OK')
+or ("W_City" = 'Ephrata' and "W_State" = 'PA')
+or ("W_City" = 'Export' and "W_State" = 'PA')
+or ("W_City" = 'Knoxville' and "W_State" = 'IA')
+or ("W_City" = 'Lincoln' and "W_State" = 'NE')
+or ("W_City" = 'Beatrice' and "W_State" = 'NE')
+or ("W_City" = 'Big Lake' and "W_State" = 'MN')
+)
+;
