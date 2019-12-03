@@ -32,7 +32,11 @@ FROM
             || peo.middle_name
             || ' '
             || peo.last_name AS "Reference1",
-            EXTRACT(YEAR FROM(current_date) ) - EXTRACT(YEAR FROM peo.service_dt) AS "Reference2",
+            CASE
+                    WHEN extract(MONTH from peo.service_dt) >= extract(MONTH from current_date) THEN EXTRACT(YEAR FROM(current_date) ) - EXTRACT(YEAR FROM peo.service_dt)
+                    WHEN extract(MONTH from peo.service_dt) < extract(MONTH from current_date)  THEN ( EXTRACT(YEAR FROM(current_date) ) - EXTRACT(YEAR FROM peo.service_dt) ) + 1
+                END
+            AS "Reference2",
             peo.service_dt AS "Reference3",
             TO_CHAR(peo.service_dt,'Month') AS "Month",
             NULL AS "ThirdPartyAcct",       --Null/User Provides
@@ -106,6 +110,4 @@ WHERE
         '60',
         '65',
         '70'
-    )
-    --AND peo.emplid in ('0167978','0173245','0172108','0172908')
-    ;
+    );
