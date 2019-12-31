@@ -1,0 +1,117 @@
+-- PLAN TYPES:
+    -- 50: Sick
+    -- 51: Vacation
+    -- 5Z: Optional Holiday  
+SELECT
+    emp.emplid AS "Employee #",
+    emp.position_nbr AS "Position #",
+    emp.name AS "Employee Name",
+    emp.jobtitle AS "Job Title",
+    emp.ac_mailloc_descr AS "Location",
+    emp.ac_super_name AS "Manager",
+    emp.orig_hire_dt AS "Hire Date",
+    emp2.rehire_dt AS "Rehire Date",
+    emp.job_entry_dt AS "Entry Date",
+    pos.ac_ext_lvl02_name AS "AC_EXT_LVL02_NA",
+    pos.ac_ext_lvl03_name AS "AC_EXT_LVL03_NA",
+    pos.ac_ext_lvl04_name AS "AC_EXT_LVL04_NA",
+    pos.ac_ext_lvl05_name AS "AC_EXT_LVL05_NA",
+    "Plan Name",
+    "Start Hrs (Sick)",
+    "Used Hrs (Sick)",
+    "Remain Hrs (Sick)",
+    "Accrual Date (Sick)",
+    "Plan Name ",
+    "Start Hrs (Vacation)",
+    "Used Hrs (Vacation)",
+    "Remain Hrs (Vacation)",
+    "Accrual Date (Vacation)",
+    "Plan Name  ",
+    "Start Hrs (Holiday)",
+    "Used Hrs (Holiday)",
+    "Remain Hrs (Holiday)",
+    "Accrual Date (Holiday)"
+FROM
+    ps_employees emp,
+    ps_ac_repts_to_lvl pos,
+    ps_ac_all_empls emp2,
+    (
+        SELECT
+            look.xlatlongname AS "Plan Name",
+            acc.emplid AS "SICKEIN",
+            acc.hrs_earned_ytd AS "Start Hrs (Sick)",
+            acc.hrs_taken_ytd AS "Used Hrs (Sick)",
+            acc.hrs_earned_ytd - acc.hrs_taken_ytd AS "Remain Hrs (Sick)",
+            acc.accrual_proc_dt AS "Accrual Date (Sick)"
+        FROM
+            ps_leave_accrual acc,
+            psxlatitem look
+        WHERE
+            acc.plan_type = '50'
+            AND look.fieldvalue = acc.plan_type
+            AND look.fieldname = 'PLAN_TYPE'
+            AND acc.accrual_proc_dt = (
+                SELECT
+                    MAX(acc2.accrual_proc_dt)
+                FROM
+                    ps_leave_accrual acc2
+                WHERE
+                    acc2.emplid = acc.emplid
+                    AND acc2.plan_type = acc.plan_type
+            )
+    ),
+    (
+        SELECT
+            look.xlatlongname AS "Plan Name ",
+            acc.emplid AS "VACEIN",
+            acc.hrs_earned_ytd AS "Start Hrs (Vacation)",
+            acc.hrs_taken_ytd AS "Used Hrs (Vacation)",
+            acc.hrs_earned_ytd - acc.hrs_taken_ytd AS "Remain Hrs (Vacation)",
+            acc.accrual_proc_dt AS "Accrual Date (Vacation)"
+        FROM
+            ps_leave_accrual acc,
+            psxlatitem look
+        WHERE
+            acc.plan_type = '51'
+            AND look.fieldvalue = acc.plan_type
+            AND look.fieldname = 'PLAN_TYPE'
+            AND acc.accrual_proc_dt = (
+                SELECT
+                    MAX(acc2.accrual_proc_dt)
+                FROM
+                    ps_leave_accrual acc2
+                WHERE
+                    acc2.emplid = acc.emplid
+                    AND acc2.plan_type = acc.plan_type
+            )
+    ),(
+        SELECT
+            look.xlatlongname AS "Plan Name  ",
+            acc.emplid AS "HOLEIN",
+            acc.hrs_earned_ytd AS "Start Hrs (Holiday)",
+            acc.hrs_taken_ytd AS "Used Hrs (Holiday)",
+            acc.hrs_earned_ytd - acc.hrs_taken_ytd AS "Remain Hrs (Holiday)",
+            acc.accrual_proc_dt AS "Accrual Date (Holiday)"
+        FROM
+            ps_leave_accrual acc,
+            psxlatitem look
+        WHERE
+            acc.plan_type = '5Z'
+            AND look.fieldvalue = acc.plan_type
+            AND look.fieldname = 'PLAN_TYPE'
+            AND acc.accrual_proc_dt = (
+                SELECT
+                    MAX(acc2.accrual_proc_dt)
+                FROM
+                    ps_leave_accrual acc2
+                WHERE
+                    acc2.emplid = acc.emplid
+                    AND acc2.plan_type = acc.plan_type
+            ))
+WHERE
+    pos.emplid (+) = emp.emplid
+    AND emp.emplid = emp2.emplid
+    AND pos.ac_ext_lvl02_name = 'SHARON HAMMOND-BLACK'
+    AND emp.emplid IN "SICKEIN"
+    AND emp.emplid IN "VACEIN"
+    AND emp.emplid IN "HOLEIN" (+);
