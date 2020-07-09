@@ -1,0 +1,122 @@
+SELECT
+    peo.position_nbr AS "Position ID",
+    NULL AS "Req No.",
+    peo.emplid AS "Emp ID",
+    peo.first_name AS "First Name",
+    peo.middle_name AS "Middle Name",
+    peo.last_name AS "Last Name",
+    NULL AS "F. Last",
+    peo.name AS "PeopleSoft V1",
+    peo.first_name_srch
+    || ' '
+    || upper(peo.middle_name)
+    || ' '
+    || peo.last_name_srch AS "PeopleSoft V2",
+    NULL AS "Vendor ID",
+    NULL AS "Vendor Name",
+    peo.jobcode AS "Job Code",
+    peo.jobtitle AS "Job Title",
+    NULL AS "Job Type",
+    NULL AS "Job Category",
+    NULL AS "Job Cat Level",
+    NULL AS "Core Traveller",
+    peo.service_dt AS "Service Dt",
+    acq.ac_acquisition_cod AS "Acq Code",
+    peo.work_phone AS "Work Phone",
+    ema.ac_email AS "Email",
+    peo.location AS "Loc ID",
+    loc.address1 AS "Address",
+    loc.city AS "City",
+    loc.state AS "State",
+    CASE
+            WHEN peo.location LIKE '%V%' THEN 'Virtual'
+            WHEN peo.location NOT LIKE '%V%' THEN 'Office'
+            ELSE 'Error'
+        END
+    AS "Loc Type",
+    peo.deptid AS "Dept ID",
+    peo.deptname AS "Dept Descr",
+    peo.ac_business_unit AS "Bus Unit",
+    peo.ac_jde_descr AS "Bus Unit Desc",
+    NULL AS "FWG",
+    CASE
+            WHEN peo.flsa_status = 'E' THEN 'Salary'
+            WHEN peo.flsa_status = 'N' THEN 'Hourly'
+            ELSE 'ERROR'
+        END
+    AS "Hourly / Salary",
+    peo.grade AS "Grade",
+    peo.sal_admin_plan AS "Salary Plan",
+    CASE
+            WHEN peo.reg_temp = 'R' THEN 'Regular'
+            WHEN peo.reg_temp = 'T' THEN 'Temp'
+            ELSE 'ERROR'
+        END
+    AS "Reular/Temporary",
+    pod.barg_unit AS "Barg Unit",
+    pod.union_cd AS "Union Code",
+    peo.full_part_time AS "Full/Part",
+    peo.fte AS "PT/FT Work %",
+    peo.flsa_status AS "FLSA Stat",
+    peo.std_hours AS "Stnd Hrs/Wk",
+    por.ac_ext_lvl01_name AS "Level 1 Name",
+    por.ac_level01_emplid AS "Level 1 Emp ID",
+    por.ac_level01_posn AS "Level 1 Position ID",
+    por.ac_ext_lvl02_name AS "Level 2 Name",
+    por.ac_level02_emplid AS "Level 2 Emp ID",
+    por.ac_level02_posn AS "Level 2 Position ID",
+    por.ac_ext_lvl03_name AS "Level 3 Name",
+    por.ac_level03_emplid AS "Level 3 Emp ID",
+    por.ac_level03_posn AS "Level 3 Position ID",
+    por.ac_ext_lvl04_name AS "Level 4 Name",
+    por.ac_level04_emplid AS "Level 4 Emp ID",
+    por.ac_level04_posn AS "Level 4 Position ID",
+    por.ac_ext_lvl05_name AS "Level 5 Name",
+    por.ac_level05_emplid AS "Level 5 Emp ID",
+    por.ac_level05_posn AS "Level 5 Position ID",
+    por.ac_ext_lvl06_name AS "Level 6 Name",
+    por.ac_level06_emplid AS "Level 6 Emp ID",
+    por.ac_level06_posn AS "Level 6 Position ID",
+    por.ac_ext_lvl07_name AS "Level 7 Name",
+    por.ac_level07_emplid AS "Level 7 Emp ID",
+    por.ac_level07_posn AS "Level 7 Position ID",
+    por.ac_ext_lvl08_name AS "Level 8 Name",
+    por.ac_level08_emplid AS "Level 8 Emp ID",
+    por.ac_level08_posn AS "Level 8 Position ID"
+FROM
+    ps_employees peo,
+    ps_win_employment acq,
+    ps_ac_email_tbl ema,
+    ps_location_tbl loc,
+    ps_position_data pod,
+    ps_ac_repts_to_lvl por
+WHERE
+    peo.emplid = acq.emplid
+    AND por.position_nbr = peo.position_nbr
+    AND por.emplid = peo.emplid
+    AND peo.emplid = ema.emplid (+)
+    AND peo.position_nbr = pod.position_nbr
+    AND pod.effdt = (
+        SELECT
+            MAX(poda.effdt)
+        FROM
+            ps_position_data poda
+        WHERE
+            poda.position_nbr = pod.position_nbr
+    )
+    /*AND peo.emplid IN (
+        '0108822',
+        '0182265',
+        '0170900',
+        '0185987'
+    )*/
+    AND loc.location = peo.location
+    AND loc.effdt = (
+        SELECT
+            MAX(loca.effdt)
+        FROM
+            ps_location_tbl loca
+        WHERE
+            loca.location = loc.location
+    )
+    AND loc.eff_status = 'A';
