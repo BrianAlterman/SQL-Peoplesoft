@@ -19,7 +19,7 @@ SELECT
     NULL AS "Job Type",
     NULL AS "Job Category",
     NULL AS "Job Cat Level",
-    NULL AS "Core Traveller",
+    pod.gvt_mob_posn_ind as  "Core Traveller",
     peo.service_dt AS "Service Dt",
     acq.ac_acquisition_cod AS "Acq Code",
     peo.work_phone AS "Work Phone",
