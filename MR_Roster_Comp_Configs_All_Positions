@@ -47,8 +47,8 @@ SELECT
             ELSE 'ERROR'
         END
     AS "Hourly / Salary",
-    --GRADE HOLD
-    --SALARY ADMIN PLAN HOLD
+    pod.grade AS "Grade",
+    pod.sal_admin_plan AS "Salary Plan",
     CASE
             WHEN pod.reg_temp = 'R' THEN 'Regular'
             WHEN pod.reg_temp = 'T' THEN 'Temp'
@@ -106,9 +106,9 @@ WHERE
             pod.position_nbr = pod2.position_nbr
     )
     AND pod.eff_status = 'A'
-    AND pod.position_nbr = jdv.position_nbr
+    AND pod.position_nbr = jdv.position_nbr (+)
     AND pod.deptid = dep.deptid
-    AND pod.reports_to = por.position_nbr
+    AND pod.reports_to = por.position_nbr (+)
     AND dep.effdt = (
         SELECT
             MAX(dep2.effdt)
