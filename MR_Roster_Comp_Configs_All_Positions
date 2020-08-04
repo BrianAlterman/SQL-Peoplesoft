@@ -1,0 +1,136 @@
+SELECT
+    --/*
+ DISTINCT
+    ( pod.position_nbr ) AS "Position ID",
+    NULL AS "Req No.",
+    peo.emplid AS "Emp ID",
+    peo.first_name AS "First Name",
+    peo.middle_name AS "Middle Name",
+    peo.last_name AS "Last Name",
+    NULL AS "F. Last",
+    peo.name AS "PeopleSoft V1",
+    peo.first_name_srch
+    || ' '
+    || upper(peo.middle_name)
+    || ' '
+    || peo.last_name_srch AS "PeopleSoft V2",
+    NULL AS "Vendor ID",
+    NULL AS "Vendor Name",
+    pod.jobcode AS "Job Code",
+    pod.descr AS "Job Title",
+    NULL AS "Job Type",
+    NULL AS "Job Category",
+    NULL AS "Job Cat Level",
+    pod.gvt_mob_posn_ind AS "Core Traveller",
+    peo.service_dt AS "Service Dt",
+    acq.ac_acquisition_cod AS "Acq Code",
+    peo.work_phone AS "Work Phone",
+    ema.ac_email AS "Email",
+    pod.location AS "Loc ID",
+    loc.address1 AS "Address",
+    loc.city AS "City",
+    loc.state AS "State",
+    CASE
+            WHEN pod.location LIKE '%V%' THEN 'Virtual'
+            WHEN pod.location NOT LIKE '%V%' THEN 'Office'
+            ELSE 'Error'
+        END
+    AS "Loc Type",
+    pod.deptid AS "Dept ID",
+    dep.descr AS "Dept Descr",
+    por.ac_business_unit AS "Bus Unit",
+    jdv.ac_jde_descr AS "Bus Unit Desc",
+    NULL AS "FWG",
+    CASE
+            WHEN pod.flsa_status = 'E' THEN 'Salary'
+            WHEN pod.flsa_status = 'N' THEN 'Hourly'
+            ELSE 'ERROR'
+        END
+    AS "Hourly / Salary",
+    --GRADE HOLD
+    --SALARY ADMIN PLAN HOLD
+    CASE
+            WHEN pod.reg_temp = 'R' THEN 'Regular'
+            WHEN pod.reg_temp = 'T' THEN 'Temp'
+            ELSE 'Vacant'
+        END
+    AS "Regular/Temporary",
+    pod.barg_unit AS "Barg Unit",
+    pod.union_cd AS "Union Code",
+    pod.full_part_time AS "Full/Part",
+    peo.fte AS "PT/FT Work %",
+    pod.flsa_status AS "FLSA Stat",
+    pod.std_hours AS "Stnd Hrs/Wk",
+    por.ac_ext_lvl01_name AS "Level 1 Name",
+    por.ac_level01_emplid AS "Level 1 Emp ID",
+    por.ac_level01_posn AS "Level 1 Position ID",
+    por.ac_ext_lvl02_name AS "Level 2 Name",
+    por.ac_level02_emplid AS "Level 2 Emp ID",
+    por.ac_level02_posn AS "Level 2 Position ID",
+    por.ac_ext_lvl03_name AS "Level 3 Name",
+    por.ac_level03_emplid AS "Level 3 Emp ID",
+    por.ac_level03_posn AS "Level 3 Position ID",
+    por.ac_ext_lvl04_name AS "Level 4 Name",
+    por.ac_level04_emplid AS "Level 4 Emp ID",
+    por.ac_level04_posn AS "Level 4 Position ID",
+    por.ac_ext_lvl05_name AS "Level 5 Name",
+    por.ac_level05_emplid AS "Level 5 Emp ID",
+    por.ac_level05_posn AS "Level 5 Position ID",
+    por.ac_ext_lvl06_name AS "Level 6 Name",
+    por.ac_level06_emplid AS "Level 6 Emp ID",
+    por.ac_level06_posn AS "Level 6 Position ID",
+    por.ac_ext_lvl07_name AS "Level 7 Name",
+    por.ac_level07_emplid AS "Level 7 Emp ID",
+    por.ac_level07_posn AS "Level 7 Position ID",
+    por.ac_ext_lvl08_name AS "Level 8 Name",
+    por.ac_level08_emplid AS "Level 8 Emp ID",
+    por.ac_level08_posn AS "Level 8 Position ID"
+    --*/
+    --count(pod.position_nbr)
+FROM
+    ps_position_data pod,
+    ps_win_employment acq,
+    ps_location_tbl loc,
+    ps_dept_tbl dep,
+    ps_ac_email_tbl ema,
+    ps_employees peo,
+    ps_ac_repts_to_lvl por,
+    ps_ac_posn_sbud_vw jdv
+WHERE
+    pod.effdt = (
+        SELECT
+            MAX(pod2.effdt)
+        FROM
+            ps_position_data pod2
+        WHERE
+            pod.position_nbr = pod2.position_nbr
+    )
+    AND pod.eff_status = 'A'
+    AND pod.position_nbr = jdv.position_nbr
+    AND pod.deptid = dep.deptid
+    AND pod.reports_to = por.position_nbr
+    AND dep.effdt = (
+        SELECT
+            MAX(dep2.effdt)
+        FROM
+            ps_dept_tbl dep2
+        WHERE
+            dep2.deptid = dep.deptid
+    )
+    AND peo.emplid = acq.emplid (+)
+    AND pod.ac_non_empl_pos = 'N'
+    AND pod.position_nbr = peo.position_nbr (+)
+    AND peo.emplid = ema.emplid (+)
+    AND loc.location = pod.location
+    AND loc.effdt = (
+        SELECT
+            MAX(loca.effdt)
+        FROM
+            ps_location_tbl loca
+        WHERE
+            loca.location = loc.location
+    )
+    --and peo.emplid = '0182265'
+    --AND loc.eff_status = 'A'
+ORDER BY
+    pod.position_nbr
