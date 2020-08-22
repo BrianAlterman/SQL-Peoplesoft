@@ -4,7 +4,7 @@
 SELECT
     COUNT(emplid)
 FROM
-    ps_employees;;
+    ps_employees;
 
 --Count of Current Employees (PS_JOBS)
 -- 10,539 08222020
@@ -35,4 +35,27 @@ FROM
         WHERE
             jobs.emplid = jobs3.emplid
             AND jobs3.effdt = jobs.effdt
-    )
+    );
+
+--Count of Employees as of VARIABLE_DATE
+select count(jobs.emplid)
+from ps_job jobs
+where jobs.per_org = 'EMP'
+and jobs.empl_status in ('A','L','P')
+and jobs.effseq = (select max(jobs3.effseq) from ps_job jobs3 where jobs.emplid = jobs3.emplid and jobs3.effdt = jobs.effdt)
+and jobs.effdt = (select max(jobs2.effdt) from ps_job jobs2 where jobs.emplid = jobs2.emplid and jobs2.effdt <= :AS_OF_DATE );
+
+--Count of Employees as of VARIABLE_RANGE
+-- Ran 14 sec on 22 dates
+select "a_date", count(jobs.emplid) as "Count"
+from ps_job jobs,
+(SELECT DATE '2020-08-01'-1 + LEVEL AS "a_date"
+  FROM dual
+    CONNECT BY LEVEL <= DATE '2020-08-22'+2 - DATE '2020-08-01'-1
+  )
+where jobs.per_org = 'EMP'
+and jobs.empl_status in ('A','L','P')
+and jobs.effseq = (select max(jobs3.effseq) from ps_job jobs3 where jobs.emplid = jobs3.emplid and jobs3.effdt = jobs.effdt)
+and jobs.effdt = (select max(jobs2.effdt) from ps_job jobs2 where jobs.emplid = jobs2.emplid and jobs2.effdt <= "a_date" )
+GROUP BY "a_date"
+ORDER BY "a_date";
