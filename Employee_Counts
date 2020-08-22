@@ -1,0 +1,38 @@
+--  Current Employee Count (PS_EMPLOYEES)
+-- 10,539 08222020
+
+SELECT
+    COUNT(emplid)
+FROM
+    ps_employees;;
+
+--Count of Current Employees (PS_JOBS)
+-- 10,539 08222020
+     SELECT
+    COUNT(jobs.emplid)
+  FROM
+    ps_job jobs
+  WHERE
+    jobs.per_org = 'EMP'
+    AND jobs.empl_status IN (
+        'A',
+        'L',
+        'P'
+    )
+    AND jobs.effdt = (
+        SELECT
+            MAX(jobs2.effdt)
+        FROM
+            ps_job jobs2
+        WHERE
+            jobs.emplid = jobs2.emplid
+    )
+    AND jobs.effseq = (
+        SELECT
+            MAX(jobs3.effseq)
+        FROM
+            ps_job jobs3
+        WHERE
+            jobs.emplid = jobs3.emplid
+            AND jobs3.effdt = jobs.effdt
+    )
