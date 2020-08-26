@@ -1,0 +1,18 @@
+SELECT
+    t.jobcode,
+    length(t.descrlong),
+    t.descrlong
+FROM
+    ps_jobcode_tbl t
+WHERE
+    t.effdt = (
+        SELECT
+            MAX(t2.effdt)
+        FROM
+            ps_jobcode_tbl t2
+        WHERE
+            t.jobcode = t2.jobcode
+    )
+    AND t.descrlong IS NOT NULL
+ORDER BY
+    length(descrlong) DESC
