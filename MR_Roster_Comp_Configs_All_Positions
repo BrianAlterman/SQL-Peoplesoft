@@ -84,7 +84,8 @@ SELECT
     por.ac_level07_posn AS "Level 7 Position ID",
     por.ac_ext_lvl08_name AS "Level 8 Name",
     por.ac_level08_emplid AS "Level 8 Emp ID",
-    por.ac_level08_posn AS "Level 8 Position ID"
+    por.ac_level08_posn AS "Level 8 Position ID",
+    peo.POSITION_ENTRY_DT as "Position Entry Date"
     --*/
     --count(pod.position_nbr)
 FROM
