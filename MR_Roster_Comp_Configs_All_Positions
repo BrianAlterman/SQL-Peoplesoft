@@ -38,7 +38,7 @@ SELECT
     AS "Loc Type",
     pod.deptid AS "Dept ID",
     dep.descr AS "Dept Descr",
-    por.ac_business_unit AS "Bus Unit",
+    peo.ac_business_unit AS "Bus Unit",
     jdv.ac_jde_descr AS "Bus Unit Desc",
     NULL AS "FWG",
     CASE
