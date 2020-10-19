@@ -38,7 +38,7 @@ SELECT
     AS "Loc Type",
     pod.deptid AS "Dept ID",
     dep.descr AS "Dept Descr",
-    peo.ac_business_unit AS "Bus Unit",
+    por2.ac_business_unit AS "Bus Unit",
     jdv.ac_jde_descr AS "Bus Unit Desc",
     NULL AS "FWG",
     CASE
@@ -96,6 +96,7 @@ FROM
     ps_ac_email_tbl ema,
     ps_employees peo,
     ps_ac_repts_to_lvl por,
+    ps_ac_repts_to_lvl por2,
     ps_ac_posn_sbud_vw jdv
 WHERE
     pod.effdt = (
@@ -110,6 +111,7 @@ WHERE
     AND pod.position_nbr = jdv.position_nbr (+)
     AND pod.deptid = dep.deptid
     AND pod.reports_to = por.position_nbr (+)
+    AND pod.position_nbr = por2.position_nbr (+)
     AND dep.effdt = (
         SELECT
             MAX(dep2.effdt)
@@ -131,7 +133,7 @@ WHERE
         WHERE
             loca.location = loc.location
     )
-    --and peo.emplid = '0182265'
+    --and peo.emplid = '0161528'
     --AND loc.eff_status = 'A'
 ORDER BY
-    pod.position_nbr
+    pod.position_nbr;
