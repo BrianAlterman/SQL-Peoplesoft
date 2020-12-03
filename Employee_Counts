@@ -93,3 +93,18 @@ ORDER BY "a_date";
             jobs.emplid = jobs3.emplid
             AND jobs3.effdt = jobs.effdt
     );
+
+--Count of Supervisors as of VARIABLE_RANGE
+select "a_date", count(distinct(jobs.supervisor_id)) as "Count"
+from ps_job jobs,
+(SELECT DATE '2017-01-01'-1 + LEVEL AS "a_date"
+  FROM dual
+    CONNECT BY LEVEL <= DATE '2018-01-01'+2 - DATE '2017-01-01'-1
+  )
+where jobs.per_org = 'EMP'
+and jobs.empl_status in ('A','L','P')
+and jobs.action_reason <> 'ACQ'
+and jobs.effseq = (select max(jobs3.effseq) from ps_job jobs3 where jobs.emplid = jobs3.emplid and jobs3.effdt = jobs.effdt)
+and jobs.effdt = (select max(jobs2.effdt) from ps_job jobs2 where jobs.emplid = jobs2.emplid and jobs2.effdt <= "a_date" )
+GROUP BY "a_date"
+ORDER BY "a_date";
