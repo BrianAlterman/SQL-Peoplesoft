@@ -1,0 +1,13 @@
+SELECT
+    jct.jobcode             AS "Job Code",
+    jct.descr               AS "Job Title",
+    jct.eff_status          AS "Status",
+    jct.jobcode_plantype    AS "Plan Type",
+    look.xlatlongname       AS "Description",
+    jct.effdt               AS "Effective"
+FROM
+    ps_jobcode_tbl  jct,
+    psxlatitem      look
+WHERE
+    look.fieldname = 'JOBCODE_PLANTYPE'
+    AND jct.jobcode_plantype = look.fieldvalue;
