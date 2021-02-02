@@ -1,0 +1,7 @@
+select * from ps_win_hrbp_emp_vw;
+
+select bp.emplid as "EIN", 
+       bp.win_hrbp_id as "HRBP EIN",
+       peo.name as "HRBP"
+from PS_WIN_HRBP_EMPLS bp, ps_employees  peo 
+where peo.emplid = bp.win_hrbp_id
