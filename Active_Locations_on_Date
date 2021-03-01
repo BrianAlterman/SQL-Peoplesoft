@@ -1,0 +1,15 @@
+-- Used for section II.A of CA EEO Report
+select loc.descr    as "Name*",
+       loc.location as "Establishment ID",
+       loc.ADDRESS1 as "Address Line 1*",
+       loc.ADDRESS2 as "Address Line 2", 
+       loc.city     as "City*",
+       loc.state    as "State*",
+       loc.postal   as "ZIP Code*"
+from   ps_location_tbl loc 
+where  loc.state = 'CA'
+and    loc.eff_status = 'A'
+and    loc.effdt = (Select max(loc2.effdt)
+                    from ps_location_tbl loc2
+                    where loc2.location = loc.location
+                    and loc2.effdt <= :REPORT_DATE);
