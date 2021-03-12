@@ -1,0 +1,35 @@
+SELECT
+    jct.jobcode       AS "Job Code",
+    jct.effdt         AS "Effective",
+    jct.descr         AS "Description",
+    jct.job_family    AS "Job Family",
+    "Job Family Description"
+FROM
+    ps_jobcode_tbl jct,
+    (
+        SELECT
+            jft.job_family    AS "Family",
+            jft.effdt         AS "Fam Effdt",
+            jft.descr         AS "Job Family Description"
+        FROM
+            ps_job_family_tbl jft
+        WHERE
+            jft.effdt = (
+                SELECT
+                    MAX(jft2.effdt)
+                FROM
+                    ps_job_family_tbl jft2
+                WHERE
+                    jft.job_family = jft2.job_family
+            )
+    )
+WHERE
+        jct.effdt = (
+            SELECT
+                MAX(jct2.effdt)
+            FROM
+                ps_jobcode_tbl jct2
+            WHERE
+                jct.jobcode = jct2.jobcode
+        )
+    AND jct.job_family = "Family" (+)
