@@ -1,0 +1,139 @@
+-- Change Admin to Professional as per Mary Cooper 04012021 
+SELECT
+    "EID",
+    "Name",
+    CASE
+        WHEN "Sex" = 'M'  THEN
+            'Male'
+        WHEN "Sex" = 'F'  THEN
+            'Female'
+        ELSE
+            'Unknown'
+    END AS "Gender",
+    "Disabled Status",
+    "Ethnicity",
+    "Status",
+    "Job ID",
+    "EEO Code",
+    "EEO Description",
+    "Position ID",
+    "Location ID",
+    "LOC_SUB",
+    "Start Date",
+    "End_Date",
+    "Seq ID",
+    "Seq ID_SUB"
+FROM
+    (
+        SELECT
+            "EID",
+            "Status",
+            "Job ID",
+            "Position ID",
+            "Location ID",
+            "Start Date",
+            CASE
+                WHEN "End Date" > "Start Date" THEN
+                    "End Date"
+                WHEN "End Date" IS NULL THEN
+                    NULL
+                ELSE
+                    "Start Date"
+            END AS "End_Date",
+            "Seq ID",
+            "Seq ID_SUB"
+        FROM
+            (
+                SELECT
+                    job.emplid          AS "EID",
+                    job.hr_status       AS "Status",
+                    job.jobcode         AS "Job ID",
+                    job.position_nbr    AS "Position ID",
+                    job.location        AS "Location ID",
+                    job.effdt           AS "Start Date",
+                    ROW_NUMBER()
+                    OVER(PARTITION BY job.emplid
+                         ORDER BY job.effdt ASC
+                    )                   AS "Seq ID"
+                FROM
+                    ps_job job
+                /*WHERE
+                    job.emplid = '0166683'*/
+                                                            ),
+            (
+                SELECT
+                    job2.emplid       AS "EID_SUB",
+                    job2.effdt - 1    AS "End Date",
+                    ROW_NUMBER()
+                    OVER(PARTITION BY job2.emplid
+                         ORDER BY job2.effdt ASC
+                    ) - 1             AS "Seq ID_SUB"
+                FROM
+                    ps_job job2
+                /*WHERE
+                    job2.emplid = '0166683'*/
+                                                            )
+        WHERE
+                "EID" = "EID_SUB" (+)
+            AND "Seq ID" = "Seq ID_SUB" (+)
+            --AND "EID" = '0166683'
+                    ),
+    (
+        SELECT DISTINCT
+            ( loc.location )    AS "LOC_SUB",
+            loc.state           AS "State"
+        FROM
+            ps_location_tbl loc
+        WHERE
+            loc.state = 'MN'
+    ),
+    (
+        SELECT
+            emp.emplid          AS "EMP EIN",
+            emp.name            AS "Name",
+            emp.eeo1code        AS "EEO Code",
+            "EEO Description",
+            emp.sex             AS "Sex",
+            emp.ethnic_group    AS "Ethnic",
+            "Ethnicity",
+            emp.disabled        AS "Disabled",
+            emp.disabled_vet    AS "Disabled Vet",
+            CASE
+                WHEN emp.disabled = 'Y'        THEN
+                    'Yes'
+                WHEN emp.disabled_vet = 'Y'    THEN
+                    'Yes'
+                ELSE
+                    'No'
+            END                 AS "Disabled Status"
+        FROM
+            ps_ac_all_empls emp,
+            (
+                SELECT
+                    look.fieldvalue      AS "CODE",
+                    look.xlatlongname    AS "Ethnicity"
+                FROM
+                    psxlatitem look
+                WHERE
+                        look.fieldname = 'ETHNIC_GROUP'
+                    AND look.eff_status = 'A'
+            ),
+            (
+                SELECT
+                    look2.fieldvalue      AS "CODE_EEO",
+                    look2.xlatlongname    AS "EEO Description"
+                FROM
+                    psxlatitem look2
+                WHERE
+                        look2.fieldname = 'EEO1CODE'
+                    AND look2.eff_status = 'A'
+            )
+        WHERE
+                emp.ethnic_group = "CODE" (+)
+            AND emp.eeo1code = "CODE_EEO" (+)
+    )
+WHERE
+        "Status" = 'A'
+    AND '05-MAR-2021' BETWEEN "Start Date" AND "End_Date"
+    AND "LOC_SUB" = "Location ID"
+    AND "EID" = "EMP EIN"
