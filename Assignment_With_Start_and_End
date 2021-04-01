@@ -1,0 +1,51 @@
+SELECT
+    "EID",
+    "Status",
+    "Job ID",
+    "Position ID",
+    "Location ID",
+    "Start Date",
+    CASE
+        WHEN "End Date" > "Start Date" THEN
+            "End Date"
+        WHEN "End Date" IS NULL THEN
+            NULL
+        ELSE
+            "Start Date"
+    END AS "End_Date",
+    "Seq ID",
+    "Seq ID_SUB"
+FROM
+    (
+        SELECT
+            job.emplid          AS "EID",
+            job.hr_status       AS "Status",
+            job.jobcode         AS "Job ID",
+            job.position_nbr    AS "Position ID",
+            job.location        AS "Location ID",
+            job.effdt           AS "Start Date",
+            ROW_NUMBER()
+            OVER(PARTITION BY job.emplid
+                 ORDER BY job.effdt ASC
+            )                   AS "Seq ID"
+        FROM
+            ps_job job
+        /*WHERE
+            job.emplid = '0182265'*/
+        ),
+    (
+        SELECT
+            job2.emplid       AS "EID_SUB",
+            job2.effdt - 1    AS "End Date",
+            ROW_NUMBER()
+            OVER(PARTITION BY job2.emplid
+                 ORDER BY job2.effdt ASC
+            ) - 1             AS "Seq ID_SUB"
+        FROM
+            ps_job job2
+        /*WHERE
+            job2.emplid = '0182265'*/
+        )
+WHERE
+        "EID" = "EID_SUB" (+)
+    AND "Seq ID" = "Seq ID_SUB" (+);
