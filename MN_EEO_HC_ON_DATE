@@ -134,8 +134,8 @@ FROM
     )
 WHERE
         "Status" = 'A'
-    AND ('05-MAR-2021' BETWEEN "Start Date" AND "End_Date" 
-        or ('05-MAR-2021' > "Start Date" and "End_Date" IS NULL)) 
+    AND (:ON_DATE BETWEEN "Start Date" AND "End_Date" 
+        or (:ON_DATE > "Start Date" and "End_Date" IS NULL)) 
     AND "LOC_SUB" = "Location ID"
     AND "EID" = "EMP EIN"
     --AND "EID" = '0187257'
