@@ -75,6 +75,7 @@ FROM
     )
 WHERE
         "Status" = 'A'
-    AND '06-MAR-2020' BETWEEN "Start Date" AND "End_Date"
+    AND (:ON_DATE BETWEEN "Start Date" AND "End_Date" 
+        or (:ON_DATE > "Start Date" and "End_Date" IS NULL)) 
     AND "LOC_SUB" = "Location ID"
     --AND "EID" = '0166683'
