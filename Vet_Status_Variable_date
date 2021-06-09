@@ -1,0 +1,110 @@
+SELECT
+    "EIN",
+    "Full Name",
+    "Disabled Vet",
+    "Veteran Status",
+    "Veteran Description",
+    "Veteran (TYPE)",
+    "Military Status",
+    "Military Description",
+    "Military (TYPE)",
+    CASE
+        WHEN "Disabled Vet" = 'Y'          THEN 'Veteran'
+        WHEN "Veteran (TYPE)" = 'YES'      THEN 'Veteran'
+        WHEN "Military (TYPE)" = 'YES'     THEN 'Veteran'
+        WHEN "Military (TYPE)" = 'SPOUSE'  THEN 'Veteran Spouse'
+        ELSE 'Not Affiliated'
+    END AS "FINAL VETERAN STATUS"
+FROM
+    (
+        SELECT
+            emp.emplid               AS "EIN",
+            emp.name                 AS "Full Name",
+            emp.disabled_vet         AS "Disabled Vet",
+            emp.military_status      AS "Veteran Status",
+            "LK1DESC"                AS "Veteran Description",
+            "LK1YN"                  AS "Veteran (TYPE)",
+            empv.win_military_stat    AS "Military Status",
+            "LK2DESC"                AS "Military Description",
+            "LK2YN"                  AS "Military (TYPE)"
+        FROM
+            ps_ac_all_empls emp, PS_WIN_PERSUSA_VW empv,
+            (
+                SELECT
+                    jobsa.emplid AS "EINA"
+                FROM
+                    ps_job jobsa
+                WHERE
+                        jobsa.per_org = 'EMP'
+                    AND jobsa.empl_status IN ( 'A', 'L', 'P' )
+                    AND jobsa.action_reason <> 'ACQ'
+                    AND jobsa.effseq = (
+                        SELECT
+                            MAX(jobs3.effseq)
+                        FROM
+                            ps_job jobs3
+                        WHERE
+                                jobsa.emplid = jobs3.emplid
+                            AND jobs3.effdt = jobsa.effdt
+                    )
+                    AND jobsa.effdt = (
+                        SELECT
+                            MAX(jobs2.effdt)
+                        FROM
+                            ps_job jobs2
+                        WHERE
+                                jobsa.emplid = jobs2.emplid
+                            AND jobs2.effdt <= :as_of_date
+                    )
+            ),
+            (
+                SELECT
+                    a.fieldname       AS "LK2FIELD",
+                    a.fieldvalue      AS "LK2VALUE",
+                    a.xlatlongname    AS "LK2DESC",
+                    CASE
+                        WHEN a.fieldvalue = '1'    THEN 'NO'     --Not indicated
+                        WHEN a.fieldvalue = 'F'    THEN 'SPOUSE' --Active Military Spouse
+                        WHEN a.fieldvalue = 'G'    THEN 'YES'    --Active Guard/Reserve
+                        WHEN a.fieldvalue = 'H'    THEN 'SPOUSE' --Veteran Spouse
+                        WHEN a.fieldvalue = 'I'    THEN 'YES'    --Veteran
+                        WHEN a.fieldvalue = 'X'    THEN 'NO'     --Not a Veteran
+                        ELSE 'ERROR'
+                    END AS "LK2YN"
+                FROM
+                    psxlatitem a
+                WHERE
+                        a.fieldname = 'WIN_MILITARY_STAT'
+                    AND a.eff_status = 'A'
+            ),
+            (
+                SELECT
+                    b.fieldname       AS "LK1FIELD",
+                    b.fieldvalue      AS "LK1VALUE",
+                    b.xlatlongname    AS "LK1DESC",
+                    CASE
+                        WHEN b.fieldvalue = '1'    THEN 'NO'     --Not indicated
+                        WHEN b.fieldvalue = '4'    THEN 'YES'    --Active Wartime/Camp Badge Vet
+                        WHEN b.fieldvalue = 'A'    THEN 'YES'    --Armed Forces Service Medal Vet
+                        WHEN b.fieldvalue = 'C'    THEN 'YES'    --Separated/Srvc Medal/Other Vet
+                        WHEN b.fieldvalue = 'D'    THEN 'YES'    --Protected Vet/Not Classified
+                        WHEN b.fieldvalue = 'O'    THEN 'YES'    --Service Medal & Other Vet
+                        WHEN b.fieldvalue = 'R'    THEN 'YES'    --Recently Separated Veteran
+                        WHEN b.fieldvalue = 'S'    THEN 'YES'    --Separated & Service Medal Vet
+                        WHEN b.fieldvalue = 'T'    THEN 'YES'    --Separated & Other Vet
+                        WHEN b.fieldvalue = 'X'    THEN 'NO'     --Not a Veteran
+                        WHEN b.fieldvalue = 'Z'    THEN 'YES'    --Not a Protected Veteran
+                        ELSE 'ERROR'
+                    END AS "LK1YN"
+                FROM
+                    psxlatitem b
+                WHERE
+                        b.fieldname = 'WIN_VETERAN_STATUS'
+                    AND b.eff_status = 'A'
+            )
+        WHERE
+                emp.military_status = "LK1VALUE" (+)
+            AND empv.win_military_stat = "LK2VALUE" (+)
+            AND emp.emplid = "EINA"
+            and emp.emplid = empv.emplid (+)
+    )
