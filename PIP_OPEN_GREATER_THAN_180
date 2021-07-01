@@ -1,0 +1,37 @@
+SELECT
+    hrbp.win_hrbp_id                                  AS "HRBP EIN",
+    peo2.name                                         AS "HRBP Name",
+    pip.emplid                                        AS "EIN",
+    peo.name                                          AS "Full Name",
+    pip.discipline_dt                                 AS "PIP Date",
+    round(current_date - pip.discipline_dt, 2)        AS "Pip Length",
+    pip.disciplinary_type                             AS "PIP Code",
+    pipt.descr                                        AS "PIP Type",
+    pip.final_resolution                              AS "PIP End",
+    pip.descrlong                                     AS "PIP Details"
+FROM
+    ps_disciplin_actn   pip,
+    ps_discip_type_tbl  pipt,
+    ps_employees        peo,
+    ps_employees        peo2,
+    ps_win_hrbp_empls   hrbp
+WHERE
+        pip.final_resolution = ' '
+    AND peo.emplid = pip.emplid
+    AND hrbp.emplid = peo.emplid
+    AND peo2.emplid = hrbp.win_hrbp_id
+    AND pip.disciplinary_type = pipt.disciplinary_type
+    AND pipt.eff_status = 'A'
+    AND round(current_date - pip.discipline_dt, 2) > 179.99
+    AND pipt.effdt = (
+        SELECT
+            MAX(pipt2.effdt)
+        FROM
+            ps_discip_type_tbl pipt2
+        WHERE
+            pipt.disciplinary_type = pipt2.disciplinary_type
+    )
+ORDER BY
+    peo2.name,
+    pip.emplid,
+    round(current_date - pip.discipline_dt, 2);
