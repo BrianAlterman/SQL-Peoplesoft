@@ -1,0 +1,170 @@
+-- DUNS information must be updated in the case statement. If the company has government contracts 
+-- the DUNS information can be obtained through SAM.gov, else reach out to Christie Hamaker/Peyton Dobrovich
+SELECT
+    peo.emplid            AS "EIN",
+    peo.name              AS "Full Name",
+    CASE
+        WHEN peo.sex = 'M'    THEN
+            'Male'
+        WHEN peo.sex = 'F'    THEN
+            'Female'
+        ELSE
+            'Unknown'
+    END                   AS "Gender",
+    look.xlatlongname     AS "Ethnic Group",
+    peo.jobcode           AS "Job Code",
+    peo.jobtitle          AS "Job Title",
+    peo.eeo1code          AS "EEO-1 Code",
+    look2.xlatlongname    AS "EEO-1 Cat Description",
+    peo.ac_cat05          AS "JDE Cat 5",
+    peo.ac_cat05_descr    AS "JDE Cat 5 Descr",
+    peo.location          AS "Location",
+    peo.full_part_time    AS "Full/Part",
+    peo.company           AS "Co",
+    com.descr             AS "Company Name",
+    peo.location_name     AS "Location Name",
+    loc.state             AS "State",
+    peo.disabled          AS "Disabled",
+    "Disabled Vet",
+    "Veteran Status",
+    "Veteran Description",
+    "Veteran (TYPE)",
+    "Military Status",
+    "Military Description",
+    "Military (TYPE)",
+    "FINAL VETERAN STATUS",
+    peo.birthdate         AS "Birthdate",
+    peo.ac_super_name     AS "Super Name",
+    loc.city              AS "Work City",
+    loc.state             AS "Work State",
+    peo.hire_dt           AS "Hire Date",
+    peo.rehire_dt         AS "Rehire Date",
+    CASE
+        WHEN peo.rehire_dt IS NULL THEN
+            peo.hire_dt
+        ELSE
+            peo.rehire_dt
+    END                   AS "Most Recent Hire Date",
+    '517000'              AS "NAICS" -- use as per Scott Wheeler 7/27/2021
+    -- DUNS Case placeholder
+FROM
+    ps_employees     peo,
+    psxlatitem       look,
+    psxlatitem       look2,
+    ps_company_tbl   com,
+    ps_location_tbl  loc,
+    (
+        SELECT
+            "EIN",
+            "Full Name",
+            "Disabled Vet",
+            "Veteran Status",
+            "Veteran Description",
+            "Veteran (TYPE)",
+            "Military Status",
+            "Military Description",
+            "Military (TYPE)",
+            CASE
+                WHEN "Disabled Vet" = 'Y'          THEN
+                    'Veteran'
+                WHEN "Veteran (TYPE)" = 'YES'      THEN
+                    'Veteran'
+                WHEN "Military (TYPE)" = 'YES'     THEN
+                    'Veteran'
+                WHEN "Military (TYPE)" = 'SPOUSE'  THEN
+                    'Veteran Spouse'
+                ELSE
+                    'Not Affiliated'
+            END AS "FINAL VETERAN STATUS"
+        FROM
+            (
+                SELECT
+                    emp.emplid               AS "EIN",
+                    emp.name                 AS "Full Name",
+                    emp.disabled_vet         AS "Disabled Vet",
+                    emp.military_status      AS "Veteran Status",
+                    "LK1DESC"                AS "Veteran Description",
+                    "LK1YN"                  AS "Veteran (TYPE)",
+                    emp.win_military_stat    AS "Military Status",
+                    "LK2DESC"                AS "Military Description",
+                    "LK2YN"                  AS "Military (TYPE)"
+                FROM
+                    ps_win_empls_vw emp,
+                    (
+                        SELECT
+                            a.fieldname       AS "LK2FIELD",
+                            a.fieldvalue      AS "LK2VALUE",
+                            a.xlatlongname    AS "LK2DESC",
+                            CASE
+                                WHEN a.fieldvalue = '1' THEN 'NO'     --Not indicated
+                                WHEN a.fieldvalue = 'F' THEN 'SPOUSE' --Active Military Spouse
+                                WHEN a.fieldvalue = 'G' THEN 'YES'    --Active Guard/Reserve
+                                WHEN a.fieldvalue = 'H' THEN 'SPOUSE' --Veteran Spouse
+                                WHEN a.fieldvalue = 'I' THEN 'YES'    --Veteran
+                                WHEN a.fieldvalue = 'X' THEN 'NO'     --Not a Veteran
+                                ELSE 'ERROR'
+                            END               AS "LK2YN"
+                        FROM
+                            psxlatitem a
+                        WHERE
+                                a.fieldname = 'WIN_MILITARY_STAT'
+                            AND a.eff_status = 'A'
+                    ),
+                    (
+                        SELECT
+                            b.fieldname       AS "LK1FIELD",
+                            b.fieldvalue      AS "LK1VALUE",
+                            b.xlatlongname    AS "LK1DESC",
+                            CASE
+                                WHEN b.fieldvalue = '1' THEN 'NO'     --Not indicated
+                                WHEN b.fieldvalue = '4' THEN 'YES'    --Active Wartime/Camp Badge Vet
+                                WHEN b.fieldvalue = 'A' THEN 'YES'    --Armed Forces Service Medal Vet
+                                WHEN b.fieldvalue = 'C' THEN 'YES'    --Separated/Srvc Medal/Other Vet
+                                WHEN b.fieldvalue = 'D' THEN 'YES'    --Protected Vet/Not Classified
+                                WHEN b.fieldvalue = 'O' THEN 'YES'    --Service Medal & Other Vet
+                                WHEN b.fieldvalue = 'R' THEN 'YES'    --Recently Separated Veteran
+                                WHEN b.fieldvalue = 'S' THEN 'YES'    --Separated & Service Medal Vet
+                                WHEN b.fieldvalue = 'T' THEN 'YES'    --Separated & Other Vet
+                                WHEN b.fieldvalue = 'X' THEN 'NO'     --Not a Veteran
+                                WHEN b.fieldvalue = 'Z' THEN 'YES'    --Not a Protected Veteran
+                                ELSE 'ERROR'
+                            END               AS "LK1YN"
+                        FROM
+                            psxlatitem b
+                        WHERE
+                                b.fieldname = 'WIN_VETERAN_STATUS'
+                            AND b.eff_status = 'A'
+                    )
+                WHERE
+                        emp.military_status = "LK1VALUE" (+)
+                    AND emp.win_military_stat = "LK2VALUE" (+)
+            )
+    )
+WHERE
+        peo.ethnic_group = look.fieldvalue (+)
+    AND look.fieldname = 'ETHNIC_GROUP'
+    AND look.eff_status = 'A'
+    AND peo.eeo1code = look2.fieldvalue (+)
+    AND look2.fieldname = 'EEO1CODE'
+    AND look2.eff_status = 'A'
+    AND com.company = peo.company
+    AND com.effdt = (
+        SELECT
+            MAX(com2.effdt)
+        FROM
+            ps_company_tbl com2
+        WHERE
+            com.company = com2.company
+    )
+    AND com.eff_status = 'A'
+    AND peo.location = loc.location
+    AND loc.effdt = (
+        SELECT
+            MAX(loc2.effdt)
+        FROM
+            ps_location_tbl loc2
+        WHERE
+            loc.location = loc2.location
+    )
+    AND peo.emplid = "EIN"
+    --AND peo.emplid IN ( '0182265', '0029616' );
