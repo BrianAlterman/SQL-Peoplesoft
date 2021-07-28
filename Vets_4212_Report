@@ -65,16 +65,11 @@ FROM
             "Military Description",
             "Military (TYPE)",
             CASE
-                WHEN "Disabled Vet" = 'Y'          THEN
-                    'Veteran'
-                WHEN "Veteran (TYPE)" = 'YES'      THEN
-                    'Veteran'
-                WHEN "Military (TYPE)" = 'YES'     THEN
-                    'Veteran'
-                WHEN "Military (TYPE)" = 'SPOUSE'  THEN
-                    'Veteran Spouse'
-                ELSE
-                    'Not Affiliated'
+                WHEN "Disabled Vet" = 'Y'         THEN 'Veteran'
+                WHEN "Veteran (TYPE)" = 'YES'     THEN 'Veteran'
+                WHEN "Military (TYPE)" = 'YES'    THEN 'Veteran'
+                WHEN "Military (TYPE)" = 'SPOUSE' THEN 'Veteran Spouse'
+                ELSE 'Not Affiliated'
             END AS "FINAL VETERAN STATUS"
         FROM
             (
