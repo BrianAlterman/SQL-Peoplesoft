@@ -45,8 +45,25 @@ SELECT
         ELSE
             peo.rehire_dt
     END                   AS "Most Recent Hire Date",
-    '517000'              AS "NAICS" -- use as per Scott Wheeler 7/27/2021
-    -- DUNS Case placeholder
+    '517000'              AS "NAICS", -- use as per Scott Wheeler 7/27/2021
+    case
+        when com.descr = 'Broadview Networks, Inc' then '877388041'
+        when com.descr like 'D%E Communications, LLC' then '95-696-4365' -- Like due to & generating a variable
+        when com.descr = 'Valor Communications of TX LLC' then '790955327'
+        when com.descr = 'Windstream Comm Kerrville, LLC' then '790955533'
+        when com.descr = 'Windstream Florida, LLC' then '791271443'
+        when com.descr = 'Windstream Iowa Comm, LLC' then '109189071'
+        when com.descr = 'Windstream Kentucky East, LLC' then '137509969'
+        when com.descr = 'Windstream Mississippi, LLC' then '187533484'
+        when com.descr = 'Windstream Nebraska, Inc.' then '111944919'
+        when com.descr = 'Windstream New York, Inc.' then '009859059'
+        when com.descr = 'Windstream North Carolina, LLC' then '790955616'
+        when com.descr = 'Windstream Ohio, LLC' then '007902778'
+        when com.descr = 'Windstream Pennsylvania, LLC' then '790955632'
+        when com.descr = 'Windstream Services II, LLC' then '11-771-0484'
+        when com.descr = 'Windstream Western Reserve,LLC' then '007903149'
+        else 'UNIDENTIFIED'
+    end as "DUNS"
 FROM
     ps_employees     peo,
     psxlatitem       look,
