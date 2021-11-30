@@ -1,0 +1,7 @@
+-- Tenure is calculated based off of service date as per Natasha Robinson 11302021
+SELECT emp.jobcode                                                                     as "Jobcode",
+       emp.jobtitle                                                                    as "Job Title",
+       avg(( to_date(:current_date) - to_date(emp.service_dt, 'DD-MON-YY') ) / 365.25) as "Avg Tenure"
+FROM   ps_employees emp
+WHERE  emp.jobcode = '11991'
+Group  by emp.jobcode, emp.jobtitle
