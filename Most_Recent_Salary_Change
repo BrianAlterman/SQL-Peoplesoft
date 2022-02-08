@@ -1,0 +1,10 @@
+select job.emplid         as "EIN", 
+       job.effdt          as "Effective Date",  
+       job.action_reason  as "Change Reason", 
+       job.sal_admin_plan as "Sal Admin Plan" 
+from ps_job job 
+where job.effdt = (select max(job2.effdt)
+                   from ps_job job2
+                   where job.emplid = job2.emplid
+                   and job2.change_amt <>'0')
+and emplid in ('0182265');
