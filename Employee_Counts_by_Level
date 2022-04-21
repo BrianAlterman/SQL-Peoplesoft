@@ -1,0 +1,2140 @@
+--Count of Employees by level as of VARIABLE_DATE
+SELECT
+    CASE
+        WHEN jobs.grade = '0'      THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '1'      THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '2'      THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '3'      THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '4'      THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '5'      THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '6'      THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '7'      THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '8'      THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '12'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '13'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '14'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '15'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '16'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '17'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '18'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '19'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '20'     THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '21'     THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '22'     THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '26'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '30'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '31'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '32'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '32F'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '33'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '33F'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '34'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '35'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '35F'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '36'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '36F'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '37'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '37F'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '38'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '39'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '40'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '41'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '42'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '43'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '44'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '45'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '46'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '47'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '48'     THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '49'     THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '50'     THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '64'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '65'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '66'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '67'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '68'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '69'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '70'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '71'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '72'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '73'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '74'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '75'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '76'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '77'     THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '78'     THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '82'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '83'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '84'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '85'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '86'     THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '87'     THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '88'     THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '90'     THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '91'     THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '92'     THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '93'     THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '94'     THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '95'     THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '96'     THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '97'     THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '98'     THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '99'     THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '100'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '101'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '102'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '103'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '104'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '105'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '106'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '107'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '108'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '109'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '110'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '111'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '112'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '113'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '114'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '115'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '116'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '117'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '118'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '119'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '120'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '121'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '122'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '123'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '124'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '125'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '126'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '127'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '128'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '129'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '130'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '131'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '132'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '133'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '134'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '135'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '136'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '137'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '138'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '139'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '140'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '141'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '142'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '143'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '144'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '145'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '146'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '147'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '148'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '149'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '150'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '151'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '152'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '153'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '154'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '155'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '156'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '157'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '158'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '159'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '160'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '161'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '162'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '163'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '164'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '165'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '166'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '167'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '168'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '169'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '170'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '171'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '172'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '173'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '174'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '175'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '176'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '177'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '178'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '179'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '180'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '181'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '182'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '183'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '184'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '185'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '186'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '187'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '188'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '189'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '190'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '191'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '192'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '193'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '194'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '195'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '196'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '197'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '198'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '199'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '200'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '201'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '202'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '203'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '204'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '205'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '206'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '207'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '208'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '209'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '210'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '211'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '212'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '213'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '214'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '215'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '216'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '217'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '218'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '219'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '220'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '221'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '222'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '223'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '224'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '225'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '226'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '227'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '228'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '229'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '230'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '231'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '232'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '233'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '234'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '235'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '236'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '237'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '238'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '239'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '240'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '241'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '242'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '243'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '244'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '245'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '246'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '247'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '248'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '249'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '250'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '251'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '252'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '253'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '254'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '255'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '256'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '257'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '258'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '259'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '260'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '261'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '262'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '263'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '264'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '265'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '266'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '267'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '268'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '269'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '270'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '271'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '272'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '273'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '274'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '275'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '276'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '277'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '278'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '279'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '280'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '281'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '282'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '283'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '284'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '285'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '286'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '287'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '288'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '289'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '290'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '291'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '292'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '293'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '294'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '295'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '296'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '297'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '298'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '299'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '300'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '301'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '302'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '303'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '304'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '305'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '306'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '307'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '308'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '309'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '310'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '311'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '312'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '313'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '314'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '315'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '316'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '317'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '318'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '319'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '320'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '321'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '322'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '323'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '324'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '325'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '326'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '327'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '328'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '329'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '330'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '331'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '332'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '333'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '334'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '335'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '336'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '337'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '338'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '339'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '340'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '341'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '342'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '343'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '344'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '345'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '346'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '347'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '348'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '349'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '350'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '351'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '352'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '353'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '354'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '355'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '356'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '357'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '358'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '359'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '360'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '361'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '362'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '363'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '364'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '365'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '366'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '367'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '368'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '369'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '370'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '371'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '372'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '373'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '374'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '375'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '376'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '377'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '378'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '379'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '380'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '381'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '382'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '383'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '384'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '385'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '386'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '387'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '388'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '389'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '390'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '391'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '392'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '393'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '394'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '395'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '396'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '397'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '398'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '399'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '400'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '401'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '402'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '403'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '404'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '405'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '406'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '407'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '408'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '409'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '410'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '411'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '412'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '413'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '414'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '415'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '416'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '417'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '418'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '419'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '420'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '421'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '422'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '423'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '424'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '425'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '426'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '427'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '428'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '429'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '430'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '431'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '432'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '433'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '434'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '435'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '436'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '437'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '438'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '439'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '440'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '441'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '442'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '443'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '444'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '445'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '446'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '447'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '448'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '449'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '450'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '451'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '452'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '453'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '454'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '455'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '456'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '457'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '458'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '459'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '460'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '461'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '462'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '463'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '464'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '465'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '466'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '467'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '468'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '469'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '470'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '471'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '472'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '473'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '474'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '475'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '476'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '477'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '478'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '479'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '480'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '481'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '482'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '483'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '484'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '485'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '486'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '487'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '488'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '489'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '490'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '491'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '492'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '493'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '494'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '495'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '496'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '497'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '498'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '499'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '504'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '505'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '506'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '507'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '508'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '509'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '510'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '511'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '512'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '513'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '514'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '515'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '516'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '520'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '521'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '522'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '523'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '524'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '525'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '526'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '527'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '528'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '529'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '530'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '531'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '532'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '533'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '534'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '535'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '536'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '537'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '538'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '539'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '540'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '541'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '542'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '543'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '544'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '545'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '546'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '547'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '548'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '549'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '550'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '592'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '593'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = 'T75'    THEN
+            '1 - Entry-level and lower-level employees'
+        ELSE
+            'Unknown'
+    END AS "Level",
+    COUNT(jobs.emplid)
+FROM
+    ps_job jobs
+WHERE
+        jobs.per_org = 'EMP'
+    AND jobs.empl_status IN ( 'A', 'L', 'P' )
+    AND jobs.action_reason <> 'ACQ'
+    AND jobs.effseq = (
+        SELECT
+            MAX(jobs3.effseq)
+        FROM
+            ps_job jobs3
+        WHERE
+                jobs.emplid = jobs3.emplid
+            AND jobs3.effdt = jobs.effdt
+    )
+    AND jobs.effdt = (
+        SELECT
+            MAX(jobs2.effdt)
+        FROM
+            ps_job jobs2
+        WHERE
+                jobs.emplid = jobs2.emplid
+            AND jobs2.effdt <= :as_of_date
+    )
+GROUP BY
+    CASE
+        WHEN jobs.grade = '0'      THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '1'      THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '2'      THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '3'      THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '4'      THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '5'      THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '6'      THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '7'      THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '8'      THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '12'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '13'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '14'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '15'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '16'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '17'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '18'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '19'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '20'     THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '21'     THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '22'     THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '26'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '30'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '31'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '32'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '32F'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '33'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '33F'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '34'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '35'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '35F'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '36'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '36F'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '37'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '37F'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '38'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '39'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '40'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '41'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '42'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '43'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '44'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '45'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '46'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '47'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '48'     THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '49'     THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '50'     THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '64'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '65'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '66'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '67'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '68'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '69'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '70'     THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '71'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '72'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '73'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '74'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '75'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '76'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '77'     THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '78'     THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '82'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '83'     THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '84'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '85'     THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '86'     THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '87'     THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '88'     THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '90'     THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '91'     THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '92'     THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '93'     THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '94'     THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '95'     THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '96'     THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '97'     THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '98'     THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '99'     THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '100'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '101'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '102'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '103'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '104'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '105'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '106'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '107'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '108'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '109'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '110'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '111'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '112'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '113'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '114'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '115'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '116'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '117'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '118'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '119'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '120'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '121'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '122'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '123'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '124'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '125'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '126'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '127'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '128'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '129'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '130'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '131'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '132'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '133'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '134'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '135'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '136'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '137'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '138'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '139'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '140'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '141'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '142'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '143'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '144'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '145'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '146'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '147'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '148'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '149'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '150'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '151'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '152'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '153'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '154'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '155'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '156'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '157'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '158'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '159'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '160'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '161'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '162'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '163'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '164'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '165'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '166'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '167'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '168'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '169'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '170'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '171'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '172'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '173'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '174'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '175'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '176'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '177'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '178'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '179'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '180'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '181'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '182'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '183'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '184'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '185'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '186'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '187'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '188'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '189'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '190'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '191'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '192'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '193'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '194'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '195'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '196'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '197'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '198'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '199'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '200'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '201'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '202'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '203'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '204'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '205'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '206'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '207'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '208'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '209'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '210'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '211'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '212'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '213'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '214'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '215'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '216'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '217'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '218'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '219'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '220'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '221'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '222'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '223'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '224'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '225'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '226'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '227'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '228'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '229'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '230'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '231'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '232'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '233'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '234'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '235'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '236'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '237'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '238'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '239'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '240'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '241'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '242'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '243'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '244'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '245'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '246'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '247'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '248'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '249'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '250'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '251'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '252'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '253'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '254'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '255'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '256'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '257'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '258'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '259'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '260'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '261'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '262'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '263'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '264'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '265'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '266'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '267'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '268'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '269'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '270'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '271'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '272'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '273'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '274'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '275'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '276'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '277'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '278'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '279'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '280'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '281'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '282'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '283'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '284'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '285'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '286'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '287'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '288'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '289'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '290'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '291'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '292'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '293'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '294'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '295'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '296'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '297'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '298'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '299'    THEN
+            '2 - Mid-level employees and/or technical workers'
+        WHEN jobs.grade = '300'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '301'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '302'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '303'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '304'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '305'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '306'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '307'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '308'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '309'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '310'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '311'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '312'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '313'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '314'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '315'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '316'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '317'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '318'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '319'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '320'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '321'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '322'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '323'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '324'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '325'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '326'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '327'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '328'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '329'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '330'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '331'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '332'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '333'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '334'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '335'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '336'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '337'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '338'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '339'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '340'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '341'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '342'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '343'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '344'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '345'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '346'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '347'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '348'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '349'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '350'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '351'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '352'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '353'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '354'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '355'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '356'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '357'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '358'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '359'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '360'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '361'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '362'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '363'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '364'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '365'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '366'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '367'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '368'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '369'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '370'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '371'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '372'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '373'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '374'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '375'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '376'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '377'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '378'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '379'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '380'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '381'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '382'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '383'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '384'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '385'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '386'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '387'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '388'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '389'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '390'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '391'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '392'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '393'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '394'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '395'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '396'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '397'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '398'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '399'    THEN
+            '3 - Mid-level managers and supervisors'
+        WHEN jobs.grade = '400'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '401'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '402'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '403'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '404'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '405'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '406'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '407'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '408'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '409'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '410'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '411'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '412'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '413'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '414'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '415'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '416'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '417'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '418'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '419'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '420'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '421'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '422'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '423'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '424'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '425'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '426'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '427'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '428'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '429'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '430'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '431'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '432'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '433'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '434'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '435'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '436'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '437'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '438'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '439'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '440'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '441'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '442'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '443'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '444'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '445'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '446'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '447'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '448'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '449'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '450'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '451'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '452'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '453'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '454'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '455'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '456'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '457'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '458'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '459'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '460'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '461'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '462'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '463'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '464'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '465'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '466'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '467'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '468'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '469'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '470'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '471'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '472'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '473'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '474'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '475'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '476'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '477'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '478'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '479'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '480'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '481'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '482'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '483'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '484'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '485'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '486'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '487'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '488'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '489'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '490'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '491'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '492'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '493'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '494'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '495'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '496'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '497'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '498'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '499'    THEN
+            '4 - Senior managers and supervisors'
+        WHEN jobs.grade = '504'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '505'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '506'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '507'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '508'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '509'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '510'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '511'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '512'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '513'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '514'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '515'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '516'    THEN
+            '1 - Entry-level and lower-level employees'
+        WHEN jobs.grade = '520'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '521'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '522'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '523'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '524'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '525'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '526'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '527'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '528'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '529'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '530'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '531'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '532'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '533'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '534'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '535'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '536'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '537'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '538'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '539'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '540'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '541'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '542'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '543'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '544'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '545'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '546'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '547'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '548'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '549'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '550'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '592'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = '593'    THEN
+            '5 - C-Suite, Board of Directors members, presidents and vice presidents'
+        WHEN jobs.grade = 'T75'    THEN
+            '1 - Entry-level and lower-level employees'
+        ELSE
+            'Unknown'
+    END;
