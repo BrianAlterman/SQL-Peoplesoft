@@ -1,0 +1,8 @@
+SELECT
+    ema.emplid         AS "EIN",
+    ema.e_addr_type    AS "TYPE",
+    email_addr         AS "Email Addres"
+FROM
+    ps_email_addresses ema
+WHERE
+    ema.e_addr_type <> 'BUSN';
