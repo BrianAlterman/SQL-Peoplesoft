@@ -1,0 +1,48 @@
+--Retirement Qualifications:
+--Age 55-with at least 20 years of service
+--Age 60-with at least 15 years of service
+--Age 65-with at least 5 years of service
+SELECT
+    :as_of                                                                  AS "As of Date", --Date format must be entered as DD-MMM-YYYY
+    peo.position_nbr                                                        AS "Position Num",
+    peo.emplid                                                              AS "EIN",
+    peo.name                                                                AS "Full Name",
+    peo.jobcode                                                             AS "Job Code",
+    peo.jobtitle                                                            AS "Job Title",
+    peo.ac_business_unit                                                    AS "Business Unit",
+    peo.ac_jde_descr                                                        AS "BU Description",
+    peo.ac_mail_location                                                    AS "Loc Code",
+    peo.ac_mailloc_descr                                                    AS "Location",
+    peo.birthdate                                                           AS "DOB",
+    round(((to_date(:as_of) - peo.birthdate) / 365.25), 4)                  AS "Age",
+    peo.service_dt                                                          AS "Service Date",
+    round(((to_date(:as_of) - service_dt) / 365.25), 4)                     AS "TOS",
+    CASE
+        WHEN round(((to_date(:as_of) - peo.birthdate) / 365.25), 4) >= '55'
+             AND round(((to_date(:as_of) - service_dt) / 365.25), 4) >= '20' THEN
+            'Eligible'
+        WHEN round(((to_date(:as_of) - peo.birthdate) / 365.25), 4) >= '60'
+             AND round(((to_date(:as_of) - service_dt) / 365.25), 4) >= '15' THEN
+            'Eligible'
+        WHEN round(((to_date(:as_of) - peo.birthdate) / 365.25), 4) >= '65'
+             AND round(((to_date(:as_of) - service_dt) / 365.25), 4) >= '5' THEN
+            'Eligible'
+        ELSE
+            'Ineligible'
+    END                                                                     AS "Status",
+    peo.manager_id                                                          AS "Supervisor ID",
+    peo.ac_super_name                                                       AS "Supervisor",
+    rpt.ac_ext_lvl01_name                                                   AS "Level 1 Leader",
+    rpt.ac_ext_lvl02_name                                                   AS "Level 2 Leader",
+    rpt.ac_ext_lvl03_name                                                   AS "Level 3 Leader",
+    rpt.ac_ext_lvl04_name                                                   AS "Level 4 Leader",
+    rpt.ac_ext_lvl05_name                                                   AS "Level 5 Leader",
+    rpt.ac_ext_lvl06_name                                                   AS "Level 6 Leader",
+    rpt.ac_ext_lvl07_name                                                   AS "Level 7 Leader",
+    rpt.ac_ext_lvl08_name                                                   AS "Level 8 Leader"
+FROM
+    ps_employees        peo,
+    ps_ac_repts_to_lvl  rpt
+WHERE
+        rpt.position_nbr = peo.position_nbr
+    AND rpt.emplid = peo.emplid
