@@ -2,6 +2,7 @@
     -- 50: Sick
     -- 51: Vacation
     -- 5Z: Optional Holiday  
+    -- Modified 12082022 - added adjustment data to query
 SELECT
     emp.emplid AS "Employee #",
     emp.position_nbr AS "Position #",
@@ -18,16 +19,19 @@ SELECT
     pos.ac_ext_lvl05_name AS "AC_EXT_LVL05_NA",
     "Plan Name",
     "Start Hrs (Sick)",
+    "Adjust Hrs (Sick)",
     "Used Hrs (Sick)",
     "Remain Hrs (Sick)",
     "Accrual Date (Sick)",
     "Plan Name ",
     "Start Hrs (Vacation)",
+    "Adjust Hrs (Vacation)",
     "Used Hrs (Vacation)",
     "Remain Hrs (Vacation)",
     "Accrual Date (Vacation)",
     "Plan Name  ",
     "Start Hrs (Holiday)",
+    "Adjust Hrs (Holiday)",
     "Used Hrs (Holiday)",
     "Remain Hrs (Holiday)",
     "Accrual Date (Holiday)"
@@ -40,8 +44,9 @@ FROM
             look.xlatlongname AS "Plan Name",
             acc.emplid AS "SICKEIN",
             acc.hrs_earned_ytd AS "Start Hrs (Sick)",
+            acc.hrs_adjust_ytd AS "Adjust Hrs (Sick)",
             acc.hrs_taken_ytd AS "Used Hrs (Sick)",
-            acc.hrs_earned_ytd - acc.hrs_taken_ytd AS "Remain Hrs (Sick)",
+            (acc.hrs_adjust_ytd+acc.hrs_earned_ytd) - acc.hrs_taken_ytd AS "Remain Hrs (Sick)",
             acc.accrual_proc_dt AS "Accrual Date (Sick)"
         FROM
             ps_leave_accrual acc,
@@ -65,8 +70,9 @@ FROM
             look.xlatlongname AS "Plan Name ",
             acc.emplid AS "VACEIN",
             acc.hrs_earned_ytd AS "Start Hrs (Vacation)",
+            acc.hrs_adjust_ytd AS "Adjust Hrs (Vacation)",
             acc.hrs_taken_ytd AS "Used Hrs (Vacation)",
-            acc.hrs_earned_ytd - acc.hrs_taken_ytd AS "Remain Hrs (Vacation)",
+            (acc.hrs_adjust_ytd+acc.hrs_earned_ytd) - acc.hrs_taken_ytd AS "Remain Hrs (Vacation)",
             acc.accrual_proc_dt AS "Accrual Date (Vacation)"
         FROM
             ps_leave_accrual acc,
@@ -89,8 +95,9 @@ FROM
             look.xlatlongname AS "Plan Name  ",
             acc.emplid AS "HOLEIN",
             acc.hrs_earned_ytd AS "Start Hrs (Holiday)",
+            acc.hrs_adjust_ytd AS "Adjust Hrs (Holiday)",
             acc.hrs_taken_ytd AS "Used Hrs (Holiday)",
-            acc.hrs_earned_ytd - acc.hrs_taken_ytd AS "Remain Hrs (Holiday)",
+            (acc.hrs_adjust_ytd+acc.hrs_earned_ytd) - acc.hrs_taken_ytd AS "Remain Hrs (Holiday)",
             acc.accrual_proc_dt AS "Accrual Date (Holiday)"
         FROM
             ps_leave_accrual acc,
@@ -115,3 +122,4 @@ WHERE
     AND emp.emplid IN "SICKEIN"
     AND emp.emplid IN "VACEIN"
     AND emp.emplid IN "HOLEIN" (+);
+    
