@@ -2,6 +2,8 @@
 --Age 55-with at least 20 years of service
 --Age 60-with at least 15 years of service
 --Age 65-with at least 5 years of service
+--NOTE: This is only for non-union, for union new qualifications would be needed
+--      and union/bargaining unit would need to be rbought in
 SELECT
     :as_of                                                                  AS "As of Date", --Date format must be entered as DD-MMM-YYYY
     peo.position_nbr                                                        AS "Position Num",
