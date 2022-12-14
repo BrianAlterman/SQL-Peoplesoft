@@ -3,6 +3,7 @@
     -- 51: Vacation
     -- 5Z: Optional Holiday  
     -- Modified 12082022 - added adjustment data to query
+    -- Modified 12142022 - added a filter for regular employees to remove non-eligible temp employees
 SELECT
     emp.emplid AS "Employee #",
     emp.position_nbr AS "Position #",
@@ -118,6 +119,7 @@ FROM
 WHERE
     pos.emplid (+) = emp.emplid
     AND emp.emplid = emp2.emplid
+    and emp.reg_temp = 'R'
     AND pos.ac_ext_lvl02_name = 'SHARON HAMMOND-BLACK'
     AND emp.emplid IN "SICKEIN"
     AND emp.emplid IN "VACEIN"
