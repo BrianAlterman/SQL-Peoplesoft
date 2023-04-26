@@ -1,6 +1,6 @@
 --Count of Employees as of VARIABLE_DATE - 10,520 on 4/26/2023, 11,050 on 4/26/2022
 --Can be modified to look at different levels
---overallocation causes discrepencies
+--If there is a vacant plot of the heirarchy on the level you are running the total will be less than the company total
 SELECT
     :effdt as "As of",
     "Lvl 1 PosID",          --Change level here/7 changes needed
