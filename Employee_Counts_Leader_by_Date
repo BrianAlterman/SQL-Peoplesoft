@@ -1,0 +1,1643 @@
+--Count of Employees as of VARIABLE_DATE - 10,520 on 4/26/2023, 11,050 on 4/26/2022
+--Can be modified to look at different levels
+--overallocation causes discrepencies
+SELECT
+    :effdt as "As of",
+    "Lvl 1 PosID",          --Change level here/7 changes needed
+    "Lvl 1 Description",    --Change level here
+    "Leader Name",
+    "Emp Count"
+FROM
+    (
+        SELECT
+            "Lvl 1 PosID",          --Change level here
+            "Lvl 1 Description",    --Change level here
+            COUNT(jobs.emplid) AS "Emp Count"
+        FROM
+            ps_job jobs,
+            (
+                SELECT
+                    coalesce("Lvl 9 PosID", "Lvl 8 PosID", "Lvl 7 PosID", "Lvl 6 PosID", "Lvl 5 PosID",
+                             "Lvl 4 PosID", "Lvl 3 PosID",
+                             "Lvl 2 PosID",
+                             "Lvl 1 PosID") AS "Position",
+                    "Lvl 0 PosID",
+                    "Lvl 1 Effective",
+                    "Lvl 1 PosID",
+                    "Lvl 1 Description",
+                    "Lvl 2 Effective",
+                    "Lvl 2 PosID",
+                    "Lvl 2 Description",
+                    "Lvl 3 Effective",
+                    "Lvl 3 PosID",
+                    "Lvl 3 Description",
+                    "Lvl 4 Effective",
+                    "Lvl 4 PosID",
+                    "Lvl 4 Description",
+                    "Lvl 5 Effective",
+                    "Lvl 5 PosID",
+                    "Lvl 5 Description",
+                    "Lvl 6 Effective",
+                    "Lvl 6 PosID",
+                    "Lvl 6 Description",
+                    "Lvl 7 Effective",
+                    "Lvl 7 PosID",
+                    "Lvl 7 Description",
+                    "Lvl 8 Effective",
+                    "Lvl 8 PosID",
+                    "Lvl 8 Description",
+                    "Lvl 9 Effective",
+                    "Lvl 9 PosID",
+                    "Lvl 9 Description"
+                FROM
+                    (
+                        SELECT
+                            pos.reports_to      AS "Lvl 0 PosID",
+                            pos.effdt           AS "Lvl 1 Effective",
+                            pos.position_nbr    AS "Lvl 1 PosID",
+                            pos.descr           AS "Lvl 1 Description",
+                            NULL                AS "Lvl 2 Effective",
+                            NULL                AS "Lvl 2 PosID",
+                            NULL                AS "Lvl 2 Description",
+                            NULL                AS "Lvl 3 Effective",
+                            NULL                AS "Lvl 3 PosID",
+                            NULL                AS "Lvl 3 Description",
+                            NULL                AS "Lvl 4 Effective",
+                            NULL                AS "Lvl 4 PosID",
+                            NULL                AS "Lvl 4 Description",
+                            NULL                AS "Lvl 5 Effective",
+                            NULL                AS "Lvl 5 PosID",
+                            NULL                AS "Lvl 5 Description",
+                            NULL                AS "Lvl 6 Effective",
+                            NULL                AS "Lvl 6 PosID",
+                            NULL                AS "Lvl 6 Description",
+                            NULL                AS "Lvl 7 Effective",
+                            NULL                AS "Lvl 7 PosID",
+                            NULL                AS "Lvl 7 Description",
+                            NULL                AS "Lvl 8 Effective",
+                            NULL                AS "Lvl 8 PosID",
+                            NULL                AS "Lvl 8 Description",
+                            NULL                AS "Lvl 9 Effective",
+                            NULL                AS "Lvl 9 PosID",
+                            NULL                AS "Lvl 9 Description"
+                        FROM
+                            ps_position_data pos
+                        WHERE
+                                pos.reports_to = :hier_pos --00074582
+                                AND pos.eff_status = 'A'
+                            AND pos.ac_non_empl_pos = 'N'
+                            AND pos.effdt = (
+                                SELECT
+                                    MAX(posa.effdt)
+                                FROM
+                                    cis_ncs_posn_work_tbl posa
+                                WHERE
+                                        posa.position_nbr = pos.position_nbr
+                                    AND posa.effdt <= :effdt
+                            )
+                        UNION
+--Pull level 2 positions
+                        SELECT
+                            "Lvl 0 PosID",
+                            "Lvl 1 Effective",
+                            "Lvl 1 PosID",
+                            "Lvl 1 Description",
+                            pos2.effdt           AS "Lvl 2 Effective",
+                            pos2.position_nbr    AS "Lvl 2 PosID",
+                            pos2.descr           AS "Lvl 2 Description",
+                            NULL                 AS "Lvl 3 Effective",
+                            NULL                 AS "Lvl 3 PosID",
+                            NULL                 AS "Lvl 3 Description",
+                            NULL                 AS "Lvl 4 Effective",
+                            NULL                 AS "Lvl 4 PosID",
+                            NULL                 AS "Lvl 4 Description",
+                            NULL                 AS "Lvl 5 Effective",
+                            NULL                 AS "Lvl 5 PosID",
+                            NULL                 AS "Lvl 5 Description",
+                            NULL                 AS "Lvl 6 Effective",
+                            NULL                 AS "Lvl 6 PosID",
+                            NULL                 AS "Lvl 6 Description",
+                            NULL                 AS "Lvl 7 Effective",
+                            NULL                 AS "Lvl 7 PosID",
+                            NULL                 AS "Lvl 7 Description",
+                            NULL                 AS "Lvl 8 Effective",
+                            NULL                 AS "Lvl 8 PosID",
+                            NULL                 AS "Lvl 8 Description",
+                            NULL                 AS "Lvl 9 Effective",
+                            NULL                 AS "Lvl 9 PosID",
+                            NULL                 AS "Lvl 9 Description"
+                        FROM
+                            ps_position_data pos2,
+                            (
+                                SELECT
+                                    pos.reports_to      AS "Lvl 0 PosID",
+                                    pos.effdt           AS "Lvl 1 Effective",
+                                    pos.position_nbr    AS "Lvl 1 PosID",
+                                    pos.descr           AS "Lvl 1 Description"
+                                FROM
+                                    ps_position_data pos
+                                WHERE
+                                        pos.reports_to = :hier_pos --00074582
+                                                AND pos.eff_status = 'A'
+                                    AND pos.ac_non_empl_pos = 'N'
+                                    AND pos.effdt = (
+                                        SELECT
+                                            MAX(posa.effdt)
+                                        FROM
+                                            cis_ncs_posn_work_tbl posa
+                                        WHERE
+                                                posa.position_nbr = pos.position_nbr
+                                            AND posa.effdt <= :effdt
+                                    )
+                            )
+                        WHERE
+                                "Lvl 1 PosID" = pos2.reports_to (+)
+                            AND pos2.reports_to <> :hier_pos
+                            AND pos2.eff_status = 'A'
+                            AND pos2.ac_non_empl_pos = 'N'
+                            AND pos2.effdt = (
+                                SELECT
+                                    MAX(pos2a.effdt)
+                                FROM
+                                    ps_position_data pos2a
+                                WHERE
+                                        pos2a.position_nbr = pos2.position_nbr
+                                    AND pos2a.effdt <= :effdt
+                            )
+                        UNION
+--Pull level 3 positions
+                        SELECT
+                            "Lvl 0 PosID",
+                            "Lvl 1 Effective",
+                            "Lvl 1 PosID",
+                            "Lvl 1 Description",
+                            "Lvl 2 Effective",
+                            "Lvl 2 PosID",
+                            "Lvl 2 Description",
+                            pos3.effdt           AS "Lvl 3 Effective",
+                            pos3.position_nbr    AS "Lvl 3 PosID",
+                            pos3.descr           AS "Lvl 3 Description",
+                            NULL                 AS "Lvl 4 Effective",
+                            NULL                 AS "Lvl 4 PosID",
+                            NULL                 AS "Lvl 4 Description",
+                            NULL                 AS "Lvl 5 Effective",
+                            NULL                 AS "Lvl 5 PosID",
+                            NULL                 AS "Lvl 5 Description",
+                            NULL                 AS "Lvl 6 Effective",
+                            NULL                 AS "Lvl 6 PosID",
+                            NULL                 AS "Lvl 6 Description",
+                            NULL                 AS "Lvl 7 Effective",
+                            NULL                 AS "Lvl 7 PosID",
+                            NULL                 AS "Lvl 7 Description",
+                            NULL                 AS "Lvl 8 Effective",
+                            NULL                 AS "Lvl 8 PosID",
+                            NULL                 AS "Lvl 8 Description",
+                            NULL                 AS "Lvl 9 Effective",
+                            NULL                 AS "Lvl 9 PosID",
+                            NULL                 AS "Lvl 9 Description"
+                        FROM
+                            ps_position_data pos3,
+                            (
+                                SELECT
+                                    "Lvl 0 PosID",
+                                    "Lvl 1 Effective",
+                                    "Lvl 1 PosID",
+                                    "Lvl 1 Description",
+                                    pos2.effdt           AS "Lvl 2 Effective",
+                                    pos2.position_nbr    AS "Lvl 2 PosID",
+                                    pos2.descr           AS "Lvl 2 Description"
+                                FROM
+                                    ps_position_data pos2,
+                                    (
+                                        SELECT
+                                            pos.reports_to      AS "Lvl 0 PosID",
+                                            pos.effdt           AS "Lvl 1 Effective",
+                                            pos.position_nbr    AS "Lvl 1 PosID",
+                                            pos.descr           AS "Lvl 1 Description"
+                                        FROM
+                                            ps_position_data pos
+                                        WHERE
+                                                pos.reports_to = :hier_pos --00074582
+                                                                                                                                                                                                                                                                                                                                    AND pos.eff_status =
+                                            'A'
+                                            AND pos.ac_non_empl_pos = 'N'
+                                            AND pos.effdt = (
+                                                SELECT
+                                                    MAX(posa.effdt)
+                                                FROM
+                                                    cis_ncs_posn_work_tbl posa
+                                                WHERE
+                                                        posa.position_nbr = pos.position_nbr
+                                                    AND posa.effdt <= :effdt
+                                            )
+                                    )
+                                WHERE
+                                        "Lvl 1 PosID" = pos2.reports_to (+)
+                                    AND pos2.reports_to <> :hier_pos
+                                    AND pos2.eff_status = 'A'
+                                    AND pos2.ac_non_empl_pos = 'N'
+                                    AND pos2.effdt = (
+                                        SELECT
+                                            MAX(pos2a.effdt)
+                                        FROM
+                                            ps_position_data pos2a
+                                        WHERE
+                                                pos2a.position_nbr = pos2.position_nbr
+                                            AND pos2a.effdt <= :effdt
+                                    )
+                            )
+                        WHERE
+                                "Lvl 2 PosID" = pos3.reports_to (+)
+                            AND pos3.reports_to <> :hier_pos
+                            AND pos3.eff_status = 'A'
+                            AND pos3.ac_non_empl_pos = 'N'
+                            AND pos3.effdt = (
+                                SELECT
+                                    MAX(pos3a.effdt)
+                                FROM
+                                    ps_position_data pos3a
+                                WHERE
+                                        pos3a.position_nbr = pos3.position_nbr
+                                    AND pos3a.effdt <= :effdt
+                            )
+                        UNION
+--Pull level 4 positions
+                        SELECT
+                            "Lvl 0 PosID",
+                            "Lvl 1 Effective",
+                            "Lvl 1 PosID",
+                            "Lvl 1 Description",
+                            "Lvl 2 Effective",
+                            "Lvl 2 PosID",
+                            "Lvl 2 Description",
+                            "Lvl 3 Effective",
+                            "Lvl 3 PosID",
+                            "Lvl 3 Description",
+                            pos4.effdt           AS "Lvl 4 Effective",
+                            pos4.position_nbr    AS "Lvl 4 PosID",
+                            pos4.descr           AS "Lvl 4 Description",
+                            NULL                 AS "Lvl 5 Effective",
+                            NULL                 AS "Lvl 5 PosID",
+                            NULL                 AS "Lvl 5 Description",
+                            NULL                 AS "Lvl 6 Effective",
+                            NULL                 AS "Lvl 6 PosID",
+                            NULL                 AS "Lvl 6 Description",
+                            NULL                 AS "Lvl 7 Effective",
+                            NULL                 AS "Lvl 7 PosID",
+                            NULL                 AS "Lvl 7 Description",
+                            NULL                 AS "Lvl 8 Effective",
+                            NULL                 AS "Lvl 8 PosID",
+                            NULL                 AS "Lvl 8 Description",
+                            NULL                 AS "Lvl 9 Effective",
+                            NULL                 AS "Lvl 9 PosID",
+                            NULL                 AS "Lvl 9 Description"
+                        FROM
+                            ps_position_data pos4,
+                            (
+                                SELECT
+                                    "Lvl 0 PosID",
+                                    "Lvl 1 Effective",
+                                    "Lvl 1 PosID",
+                                    "Lvl 1 Description",
+                                    "Lvl 2 Effective",
+                                    "Lvl 2 PosID",
+                                    "Lvl 2 Description",
+                                    pos3.effdt           AS "Lvl 3 Effective",
+                                    pos3.position_nbr    AS "Lvl 3 PosID",
+                                    pos3.descr           AS "Lvl 3 Description"
+                                FROM
+                                    ps_position_data pos3,
+                                    (
+                                        SELECT
+                                            "Lvl 0 PosID",
+                                            "Lvl 1 Effective",
+                                            "Lvl 1 PosID",
+                                            "Lvl 1 Description",
+                                            pos2.effdt           AS "Lvl 2 Effective",
+                                            pos2.position_nbr    AS "Lvl 2 PosID",
+                                            pos2.descr           AS "Lvl 2 Description"
+                                        FROM
+                                            ps_position_data pos2,
+                                            (
+                                                SELECT
+                                                    pos.reports_to      AS "Lvl 0 PosID",
+                                                    pos.effdt           AS "Lvl 1 Effective",
+                                                    pos.position_nbr    AS "Lvl 1 PosID",
+                                                    pos.descr           AS "Lvl 1 Description"
+                                                FROM
+                                                    ps_position_data pos
+                                                WHERE
+                                                        pos.reports_to = :hier_pos --00074582
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    AND
+                                                    pos.eff_status = 'A'
+                                                    AND pos.ac_non_empl_pos = 'N'
+                                                    AND pos.effdt = (
+                                                        SELECT
+                                                            MAX(posa.effdt)
+                                                        FROM
+                                                            cis_ncs_posn_work_tbl posa
+                                                        WHERE
+                                                                posa.position_nbr = pos.position_nbr
+                                                            AND posa.effdt <= :effdt
+                                                    )
+                                            )
+                                        WHERE
+                                                "Lvl 1 PosID" = pos2.reports_to (+)
+                                            AND pos2.reports_to <> :hier_pos
+                                            AND pos2.eff_status = 'A'
+                                            AND pos2.ac_non_empl_pos = 'N'
+                                            AND pos2.effdt = (
+                                                SELECT
+                                                    MAX(pos2a.effdt)
+                                                FROM
+                                                    ps_position_data pos2a
+                                                WHERE
+                                                        pos2a.position_nbr = pos2.position_nbr
+                                                    AND pos2a.effdt <= :effdt
+                                            )
+                                    )
+                                WHERE
+                                        "Lvl 2 PosID" = pos3.reports_to (+)
+                                    AND pos3.reports_to <> :hier_pos
+                                    AND pos3.eff_status = 'A'
+                                    AND pos3.ac_non_empl_pos = 'N'
+                                    AND pos3.effdt = (
+                                        SELECT
+                                            MAX(pos3a.effdt)
+                                        FROM
+                                            ps_position_data pos3a
+                                        WHERE
+                                                pos3a.position_nbr = pos3.position_nbr
+                                            AND pos3a.effdt <= :effdt
+                                    )
+                            )
+                        WHERE
+                                "Lvl 3 PosID" = pos4.reports_to (+)
+                            AND pos4.reports_to <> :hier_pos
+                            AND pos4.eff_status = 'A'
+                            AND pos4.ac_non_empl_pos = 'N'
+                            AND pos4.effdt = (
+                                SELECT
+                                    MAX(pos4a.effdt)
+                                FROM
+                                    ps_position_data pos4a
+                                WHERE
+                                        pos4a.position_nbr = pos4.position_nbr
+                                    AND pos4a.effdt <= :effdt
+                            )
+                        UNION
+--Pull level 5 positions
+                        SELECT
+                            "Lvl 0 PosID",
+                            "Lvl 1 Effective",
+                            "Lvl 1 PosID",
+                            "Lvl 1 Description",
+                            "Lvl 2 Effective",
+                            "Lvl 2 PosID",
+                            "Lvl 2 Description",
+                            "Lvl 3 Effective",
+                            "Lvl 3 PosID",
+                            "Lvl 3 Description",
+                            "Lvl 4 Effective",
+                            "Lvl 4 PosID",
+                            "Lvl 4 Description",
+                            pos5.effdt           AS "Lvl 5 Effective",
+                            pos5.position_nbr    AS "Lvl 5 PosID",
+                            pos5.descr           AS "Lvl 5 Description",
+                            NULL                 AS "Lvl 6 Effective",
+                            NULL                 AS "Lvl 6 PosID",
+                            NULL                 AS "Lvl 6 Description",
+                            NULL                 AS "Lvl 7 Effective",
+                            NULL                 AS "Lvl 7 PosID",
+                            NULL                 AS "Lvl 7 Description",
+                            NULL                 AS "Lvl 8 Effective",
+                            NULL                 AS "Lvl 8 PosID",
+                            NULL                 AS "Lvl 8 Description",
+                            NULL                 AS "Lvl 9 Effective",
+                            NULL                 AS "Lvl 9 PosID",
+                            NULL                 AS "Lvl 9 Description"
+                        FROM
+                            ps_position_data pos5,
+                            (
+                                SELECT
+                                    "Lvl 0 PosID",
+                                    "Lvl 1 Effective",
+                                    "Lvl 1 PosID",
+                                    "Lvl 1 Description",
+                                    "Lvl 2 Effective",
+                                    "Lvl 2 PosID",
+                                    "Lvl 2 Description",
+                                    "Lvl 3 Effective",
+                                    "Lvl 3 PosID",
+                                    "Lvl 3 Description",
+                                    pos4.effdt           AS "Lvl 4 Effective",
+                                    pos4.position_nbr    AS "Lvl 4 PosID",
+                                    pos4.descr           AS "Lvl 4 Description"
+                                FROM
+                                    ps_position_data pos4,
+                                    (
+                                        SELECT
+                                            "Lvl 0 PosID",
+                                            "Lvl 1 Effective",
+                                            "Lvl 1 PosID",
+                                            "Lvl 1 Description",
+                                            "Lvl 2 Effective",
+                                            "Lvl 2 PosID",
+                                            "Lvl 2 Description",
+                                            pos3.effdt           AS "Lvl 3 Effective",
+                                            pos3.position_nbr    AS "Lvl 3 PosID",
+                                            pos3.descr           AS "Lvl 3 Description"
+                                        FROM
+                                            ps_position_data pos3,
+                                            (
+                                                SELECT
+                                                    "Lvl 0 PosID",
+                                                    "Lvl 1 Effective",
+                                                    "Lvl 1 PosID",
+                                                    "Lvl 1 Description",
+                                                    pos2.effdt           AS "Lvl 2 Effective",
+                                                    pos2.position_nbr    AS "Lvl 2 PosID",
+                                                    pos2.descr           AS "Lvl 2 Description"
+                                                FROM
+                                                    ps_position_data pos2,
+                                                    (
+                                                        SELECT
+                                                            pos.reports_to      AS "Lvl 0 PosID",
+                                                            pos.effdt           AS "Lvl 1 Effective",
+                                                            pos.position_nbr    AS "Lvl 1 PosID",
+                                                            pos.descr           AS "Lvl 1 Description"
+                                                        FROM
+                                                            ps_position_data pos
+                                                        WHERE
+                                                                pos.reports_to = :hier_pos --00074582
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        AND
+                                                            pos.eff_status = 'A'
+                                                            AND pos.ac_non_empl_pos = 'N'
+                                                            AND pos.effdt = (
+                                                                SELECT
+                                                                    MAX(posa.effdt)
+                                                                FROM
+                                                                    cis_ncs_posn_work_tbl posa
+                                                                WHERE
+                                                                        posa.position_nbr = pos.position_nbr
+                                                                    AND posa.effdt <= :effdt
+                                                            )
+                                                    )
+                                                WHERE
+                                                        "Lvl 1 PosID" = pos2.reports_to (+)
+                                                    AND pos2.reports_to <> :hier_pos
+                                                    AND pos2.eff_status = 'A'
+                                                    AND pos2.ac_non_empl_pos = 'N'
+                                                    AND pos2.effdt = (
+                                                        SELECT
+                                                            MAX(pos2a.effdt)
+                                                        FROM
+                                                            ps_position_data pos2a
+                                                        WHERE
+                                                                pos2a.position_nbr = pos2.position_nbr
+                                                            AND pos2a.effdt <= :effdt
+                                                    )
+                                            )
+                                        WHERE
+                                                "Lvl 2 PosID" = pos3.reports_to (+)
+                                            AND pos3.reports_to <> :hier_pos
+                                            AND pos3.eff_status = 'A'
+                                            AND pos3.ac_non_empl_pos = 'N'
+                                            AND pos3.effdt = (
+                                                SELECT
+                                                    MAX(pos3a.effdt)
+                                                FROM
+                                                    ps_position_data pos3a
+                                                WHERE
+                                                        pos3a.position_nbr = pos3.position_nbr
+                                                    AND pos3a.effdt <= :effdt
+                                            )
+                                    )
+                                WHERE
+                                        "Lvl 3 PosID" = pos4.reports_to (+)
+                                    AND pos4.reports_to <> :hier_pos
+                                    AND pos4.eff_status = 'A'
+                                    AND pos4.ac_non_empl_pos = 'N'
+                                    AND pos4.effdt = (
+                                        SELECT
+                                            MAX(pos4a.effdt)
+                                        FROM
+                                            ps_position_data pos4a
+                                        WHERE
+                                                pos4a.position_nbr = pos4.position_nbr
+                                            AND pos4a.effdt <= :effdt
+                                    )
+                            )
+                        WHERE
+                                "Lvl 4 PosID" = pos5.reports_to (+)
+                            AND pos5.reports_to <> :hier_pos
+                            AND pos5.eff_status = 'A'
+                            AND pos5.ac_non_empl_pos = 'N'
+                            AND pos5.effdt = (
+                                SELECT
+                                    MAX(pos5a.effdt)
+                                FROM
+                                    ps_position_data pos5a
+                                WHERE
+                                        pos5a.position_nbr = pos5.position_nbr
+                                    AND pos5a.effdt <= :effdt
+                            )
+                        UNION
+--Pull level 6 positions
+                        SELECT
+                            "Lvl 0 PosID",
+                            "Lvl 1 Effective",
+                            "Lvl 1 PosID",
+                            "Lvl 1 Description",
+                            "Lvl 2 Effective",
+                            "Lvl 2 PosID",
+                            "Lvl 2 Description",
+                            "Lvl 3 Effective",
+                            "Lvl 3 PosID",
+                            "Lvl 3 Description",
+                            "Lvl 4 Effective",
+                            "Lvl 4 PosID",
+                            "Lvl 4 Description",
+                            "Lvl 5 Effective",
+                            "Lvl 5 PosID",
+                            "Lvl 5 Description",
+                            pos6.effdt           AS "Lvl 6 Effective",
+                            pos6.position_nbr    AS "Lvl 6 PosID",
+                            pos6.descr           AS "Lvl 6 Description",
+                            NULL                 AS "Lvl 7 Effective",
+                            NULL                 AS "Lvl 7 PosID",
+                            NULL                 AS "Lvl 7 Description",
+                            NULL                 AS "Lvl 8 Effective",
+                            NULL                 AS "Lvl 8 PosID",
+                            NULL                 AS "Lvl 8 Description",
+                            NULL                 AS "Lvl 9 Effective",
+                            NULL                 AS "Lvl 9 PosID",
+                            NULL                 AS "Lvl 9 Description"
+                        FROM
+                            ps_position_data pos6,
+                            (
+                                SELECT
+                                    "Lvl 0 PosID",
+                                    "Lvl 1 Effective",
+                                    "Lvl 1 PosID",
+                                    "Lvl 1 Description",
+                                    "Lvl 2 Effective",
+                                    "Lvl 2 PosID",
+                                    "Lvl 2 Description",
+                                    "Lvl 3 Effective",
+                                    "Lvl 3 PosID",
+                                    "Lvl 3 Description",
+                                    "Lvl 4 Effective",
+                                    "Lvl 4 PosID",
+                                    "Lvl 4 Description",
+                                    pos5.effdt           AS "Lvl 5 Effective",
+                                    pos5.position_nbr    AS "Lvl 5 PosID",
+                                    pos5.descr           AS "Lvl 5 Description",
+                                    NULL                 AS "Lvl 6 Effective",
+                                    NULL                 AS "Lvl 6 PosID",
+                                    NULL                 AS "Lvl 6 Description"
+                                FROM
+                                    ps_position_data pos5,
+                                    (
+                                        SELECT
+                                            "Lvl 0 PosID",
+                                            "Lvl 1 Effective",
+                                            "Lvl 1 PosID",
+                                            "Lvl 1 Description",
+                                            "Lvl 2 Effective",
+                                            "Lvl 2 PosID",
+                                            "Lvl 2 Description",
+                                            "Lvl 3 Effective",
+                                            "Lvl 3 PosID",
+                                            "Lvl 3 Description",
+                                            pos4.effdt           AS "Lvl 4 Effective",
+                                            pos4.position_nbr    AS "Lvl 4 PosID",
+                                            pos4.descr           AS "Lvl 4 Description"
+                                        FROM
+                                            ps_position_data pos4,
+                                            (
+                                                SELECT
+                                                    "Lvl 0 PosID",
+                                                    "Lvl 1 Effective",
+                                                    "Lvl 1 PosID",
+                                                    "Lvl 1 Description",
+                                                    "Lvl 2 Effective",
+                                                    "Lvl 2 PosID",
+                                                    "Lvl 2 Description",
+                                                    pos3.effdt           AS "Lvl 3 Effective",
+                                                    pos3.position_nbr    AS "Lvl 3 PosID",
+                                                    pos3.descr           AS "Lvl 3 Description"
+                                                FROM
+                                                    ps_position_data pos3,
+                                                    (
+                                                        SELECT
+                                                            "Lvl 0 PosID",
+                                                            "Lvl 1 Effective",
+                                                            "Lvl 1 PosID",
+                                                            "Lvl 1 Description",
+                                                            pos2.effdt           AS "Lvl 2 Effective",
+                                                            pos2.position_nbr    AS "Lvl 2 PosID",
+                                                            pos2.descr           AS "Lvl 2 Description"
+                                                        FROM
+                                                            ps_position_data pos2,
+                                                            (
+                                                                SELECT
+                                                                    pos.reports_to      AS "Lvl 0 PosID",
+                                                                    pos.effdt           AS "Lvl 1 Effective",
+                                                                    pos.position_nbr    AS "Lvl 1 PosID",
+                                                                    pos.descr           AS "Lvl 1 Description"
+                                                                FROM
+                                                                    ps_position_data pos
+                                                                WHERE
+                                                                        pos.reports_to = :hier_pos --00074582
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        AND
+                                                                    pos.eff_status = 'A'
+                                                                    AND pos.ac_non_empl_pos = 'N'
+                                                                    AND pos.effdt = (
+                                                                        SELECT
+                                                                            MAX(posa.effdt)
+                                                                        FROM
+                                                                            cis_ncs_posn_work_tbl posa
+                                                                        WHERE
+                                                                                posa.position_nbr = pos.position_nbr
+                                                                            AND posa.effdt <= :effdt
+                                                                    )
+                                                            )
+                                                        WHERE
+                                                                "Lvl 1 PosID" = pos2.reports_to (+)
+                                                            AND pos2.reports_to <> :hier_pos
+                                                            AND pos2.eff_status = 'A'
+                                                            AND pos2.ac_non_empl_pos = 'N'
+                                                            AND pos2.effdt = (
+                                                                SELECT
+                                                                    MAX(pos2a.effdt)
+                                                                FROM
+                                                                    ps_position_data pos2a
+                                                                WHERE
+                                                                        pos2a.position_nbr = pos2.position_nbr
+                                                                    AND pos2a.effdt <= :effdt
+                                                            )
+                                                    )
+                                                WHERE
+                                                        "Lvl 2 PosID" = pos3.reports_to (+)
+                                                    AND pos3.reports_to <> :hier_pos
+                                                    AND pos3.eff_status = 'A'
+                                                    AND pos3.ac_non_empl_pos = 'N'
+                                                    AND pos3.effdt = (
+                                                        SELECT
+                                                            MAX(pos3a.effdt)
+                                                        FROM
+                                                            ps_position_data pos3a
+                                                        WHERE
+                                                                pos3a.position_nbr = pos3.position_nbr
+                                                            AND pos3a.effdt <= :effdt
+                                                    )
+                                            )
+                                        WHERE
+                                                "Lvl 3 PosID" = pos4.reports_to (+)
+                                            AND pos4.reports_to <> :hier_pos
+                                            AND pos4.eff_status = 'A'
+                                            AND pos4.ac_non_empl_pos = 'N'
+                                            AND pos4.effdt = (
+                                                SELECT
+                                                    MAX(pos4a.effdt)
+                                                FROM
+                                                    ps_position_data pos4a
+                                                WHERE
+                                                        pos4a.position_nbr = pos4.position_nbr
+                                                    AND pos4a.effdt <= :effdt
+                                            )
+                                    )
+                                WHERE
+                                        "Lvl 4 PosID" = pos5.reports_to (+)
+                                    AND pos5.reports_to <> :hier_pos
+                                    AND pos5.eff_status = 'A'
+                                    AND pos5.ac_non_empl_pos = 'N'
+                                    AND pos5.effdt = (
+                                        SELECT
+                                            MAX(pos5a.effdt)
+                                        FROM
+                                            ps_position_data pos5a
+                                        WHERE
+                                                pos5a.position_nbr = pos5.position_nbr
+                                            AND pos5a.effdt <= :effdt
+                                    )
+                            )
+                        WHERE
+                                "Lvl 5 PosID" = pos6.reports_to (+)
+                            AND pos6.reports_to <> :hier_pos
+                            AND pos6.eff_status = 'A'
+                            AND pos6.ac_non_empl_pos = 'N'
+                            AND pos6.effdt = (
+                                SELECT
+                                    MAX(pos6a.effdt)
+                                FROM
+                                    ps_position_data pos6a
+                                WHERE
+                                        pos6a.position_nbr = pos6.position_nbr
+                                    AND pos6a.effdt <= :effdt
+                            )
+                        UNION
+--Pull level 7 positions
+                        SELECT
+                            "Lvl 0 PosID",
+                            "Lvl 1 Effective",
+                            "Lvl 1 PosID",
+                            "Lvl 1 Description",
+                            "Lvl 2 Effective",
+                            "Lvl 2 PosID",
+                            "Lvl 2 Description",
+                            "Lvl 3 Effective",
+                            "Lvl 3 PosID",
+                            "Lvl 3 Description",
+                            "Lvl 4 Effective",
+                            "Lvl 4 PosID",
+                            "Lvl 4 Description",
+                            "Lvl 5 Effective",
+                            "Lvl 5 PosID",
+                            "Lvl 5 Description",
+                            "Lvl 6 Effective",
+                            "Lvl 6 PosID",
+                            "Lvl 6 Description",
+                            pos7.effdt           AS "Lvl 7 Effective",
+                            pos7.position_nbr    AS "Lvl 7 PosID",
+                            pos7.descr           AS "Lvl 7 Description",
+                            NULL                 AS "Lvl 8 Effective",
+                            NULL                 AS "Lvl 8 PosID",
+                            NULL                 AS "Lvl 8 Description",
+                            NULL                 AS "Lvl 9 Effective",
+                            NULL                 AS "Lvl 9 PosID",
+                            NULL                 AS "Lvl 9 Description"
+                        FROM
+                            ps_position_data pos7,
+                            (
+                                SELECT
+                                    "Lvl 0 PosID",
+                                    "Lvl 1 Effective",
+                                    "Lvl 1 PosID",
+                                    "Lvl 1 Description",
+                                    "Lvl 2 Effective",
+                                    "Lvl 2 PosID",
+                                    "Lvl 2 Description",
+                                    "Lvl 3 Effective",
+                                    "Lvl 3 PosID",
+                                    "Lvl 3 Description",
+                                    "Lvl 4 Effective",
+                                    "Lvl 4 PosID",
+                                    "Lvl 4 Description",
+                                    "Lvl 5 Effective",
+                                    "Lvl 5 PosID",
+                                    "Lvl 5 Description",
+                                    pos6.effdt           AS "Lvl 6 Effective",
+                                    pos6.position_nbr    AS "Lvl 6 PosID",
+                                    pos6.descr           AS "Lvl 6 Description",
+                                    NULL                 AS "Lvl 7 Effective",
+                                    NULL                 AS "Lvl 7 PosID",
+                                    NULL                 AS "Lvl 7 Description"
+                                FROM
+                                    ps_position_data pos6,
+                                    (
+                                        SELECT
+                                            "Lvl 0 PosID",
+                                            "Lvl 1 Effective",
+                                            "Lvl 1 PosID",
+                                            "Lvl 1 Description",
+                                            "Lvl 2 Effective",
+                                            "Lvl 2 PosID",
+                                            "Lvl 2 Description",
+                                            "Lvl 3 Effective",
+                                            "Lvl 3 PosID",
+                                            "Lvl 3 Description",
+                                            "Lvl 4 Effective",
+                                            "Lvl 4 PosID",
+                                            "Lvl 4 Description",
+                                            pos5.effdt           AS "Lvl 5 Effective",
+                                            pos5.position_nbr    AS "Lvl 5 PosID",
+                                            pos5.descr           AS "Lvl 5 Description",
+                                            NULL                 AS "Lvl 6 Effective",
+                                            NULL                 AS "Lvl 6 PosID",
+                                            NULL                 AS "Lvl 6 Description"
+                                        FROM
+                                            ps_position_data pos5,
+                                            (
+                                                SELECT
+                                                    "Lvl 0 PosID",
+                                                    "Lvl 1 Effective",
+                                                    "Lvl 1 PosID",
+                                                    "Lvl 1 Description",
+                                                    "Lvl 2 Effective",
+                                                    "Lvl 2 PosID",
+                                                    "Lvl 2 Description",
+                                                    "Lvl 3 Effective",
+                                                    "Lvl 3 PosID",
+                                                    "Lvl 3 Description",
+                                                    pos4.effdt           AS "Lvl 4 Effective",
+                                                    pos4.position_nbr    AS "Lvl 4 PosID",
+                                                    pos4.descr           AS "Lvl 4 Description"
+                                                FROM
+                                                    ps_position_data pos4,
+                                                    (
+                                                        SELECT
+                                                            "Lvl 0 PosID",
+                                                            "Lvl 1 Effective",
+                                                            "Lvl 1 PosID",
+                                                            "Lvl 1 Description",
+                                                            "Lvl 2 Effective",
+                                                            "Lvl 2 PosID",
+                                                            "Lvl 2 Description",
+                                                            pos3.effdt           AS "Lvl 3 Effective",
+                                                            pos3.position_nbr    AS "Lvl 3 PosID",
+                                                            pos3.descr           AS "Lvl 3 Description"
+                                                        FROM
+                                                            ps_position_data pos3,
+                                                            (
+                                                                SELECT
+                                                                    "Lvl 0 PosID",
+                                                                    "Lvl 1 Effective",
+                                                                    "Lvl 1 PosID",
+                                                                    "Lvl 1 Description",
+                                                                    pos2.effdt           AS "Lvl 2 Effective",
+                                                                    pos2.position_nbr    AS "Lvl 2 PosID",
+                                                                    pos2.descr           AS "Lvl 2 Description"
+                                                                FROM
+                                                                    ps_position_data pos2,
+                                                                    (
+                                                                        SELECT
+                                                                            pos.reports_to      AS "Lvl 0 PosID",
+                                                                            pos.effdt           AS "Lvl 1 Effective",
+                                                                            pos.position_nbr    AS "Lvl 1 PosID",
+                                                                            pos.descr           AS "Lvl 1 Description"
+                                                                        FROM
+                                                                            ps_position_data pos
+                                                                        WHERE
+                                                                                pos.reports_to = :hier_pos --00074582
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        AND
+                                                                            pos.eff_status = 'A'
+                                                                            AND pos.ac_non_empl_pos = 'N'
+                                                                            AND pos.effdt = (
+                                                                                SELECT
+                                                                                    MAX(posa.effdt)
+                                                                                FROM
+                                                                                    cis_ncs_posn_work_tbl posa
+                                                                                WHERE
+                                                                                        posa.position_nbr = pos.position_nbr
+                                                                                    AND posa.effdt <= :effdt
+                                                                            )
+                                                                    )
+                                                                WHERE
+                                                                        "Lvl 1 PosID" = pos2.reports_to (+)
+                                                                    AND pos2.reports_to <> :hier_pos
+                                                                    AND pos2.eff_status = 'A'
+                                                                    AND pos2.ac_non_empl_pos = 'N'
+                                                                    AND pos2.effdt = (
+                                                                        SELECT
+                                                                            MAX(pos2a.effdt)
+                                                                        FROM
+                                                                            ps_position_data pos2a
+                                                                        WHERE
+                                                                                pos2a.position_nbr = pos2.position_nbr
+                                                                            AND pos2a.effdt <= :effdt
+                                                                    )
+                                                            )
+                                                        WHERE
+                                                                "Lvl 2 PosID" = pos3.reports_to (+)
+                                                            AND pos3.reports_to <> :hier_pos
+                                                            AND pos3.eff_status = 'A'
+                                                            AND pos3.ac_non_empl_pos = 'N'
+                                                            AND pos3.effdt = (
+                                                                SELECT
+                                                                    MAX(pos3a.effdt)
+                                                                FROM
+                                                                    ps_position_data pos3a
+                                                                WHERE
+                                                                        pos3a.position_nbr = pos3.position_nbr
+                                                                    AND pos3a.effdt <= :effdt
+                                                            )
+                                                    )
+                                                WHERE
+                                                        "Lvl 3 PosID" = pos4.reports_to (+)
+                                                    AND pos4.reports_to <> :hier_pos
+                                                    AND pos4.eff_status = 'A'
+                                                    AND pos4.ac_non_empl_pos = 'N'
+                                                    AND pos4.effdt = (
+                                                        SELECT
+                                                            MAX(pos4a.effdt)
+                                                        FROM
+                                                            ps_position_data pos4a
+                                                        WHERE
+                                                                pos4a.position_nbr = pos4.position_nbr
+                                                            AND pos4a.effdt <= :effdt
+                                                    )
+                                            )
+                                        WHERE
+                                                "Lvl 4 PosID" = pos5.reports_to (+)
+                                            AND pos5.reports_to <> :hier_pos
+                                            AND pos5.eff_status = 'A'
+                                            AND pos5.ac_non_empl_pos = 'N'
+                                            AND pos5.effdt = (
+                                                SELECT
+                                                    MAX(pos5a.effdt)
+                                                FROM
+                                                    ps_position_data pos5a
+                                                WHERE
+                                                        pos5a.position_nbr = pos5.position_nbr
+                                                    AND pos5a.effdt <= :effdt
+                                            )
+                                    )
+                                WHERE
+                                        "Lvl 5 PosID" = pos6.reports_to (+)
+                                    AND pos6.reports_to <> :hier_pos
+                                    AND pos6.eff_status = 'A'
+                                    AND pos6.ac_non_empl_pos = 'N'
+                                    AND pos6.effdt = (
+                                        SELECT
+                                            MAX(pos6a.effdt)
+                                        FROM
+                                            ps_position_data pos6a
+                                        WHERE
+                                                pos6a.position_nbr = pos6.position_nbr
+                                            AND pos6a.effdt <= :effdt
+                                    )
+                            )
+                        WHERE
+                                "Lvl 6 PosID" = pos7.reports_to (+)
+                            AND pos7.reports_to <> :hier_pos
+                            AND pos7.eff_status = 'A'
+                            AND pos7.ac_non_empl_pos = 'N'
+                            AND pos7.effdt = (
+                                SELECT
+                                    MAX(pos7a.effdt)
+                                FROM
+                                    ps_position_data pos7a
+                                WHERE
+                                        pos7a.position_nbr = pos7.position_nbr
+                                    AND pos7a.effdt <= :effdt
+                            )
+                        UNION
+--Pull level 8 positions
+                        SELECT
+                            "Lvl 0 PosID",
+                            "Lvl 1 Effective",
+                            "Lvl 1 PosID",
+                            "Lvl 1 Description",
+                            "Lvl 2 Effective",
+                            "Lvl 2 PosID",
+                            "Lvl 2 Description",
+                            "Lvl 3 Effective",
+                            "Lvl 3 PosID",
+                            "Lvl 3 Description",
+                            "Lvl 4 Effective",
+                            "Lvl 4 PosID",
+                            "Lvl 4 Description",
+                            "Lvl 5 Effective",
+                            "Lvl 5 PosID",
+                            "Lvl 5 Description",
+                            "Lvl 6 Effective",
+                            "Lvl 6 PosID",
+                            "Lvl 6 Description",
+                            "Lvl 7 Effective",
+                            "Lvl 7 PosID",
+                            "Lvl 7 Description",
+                            pos8.effdt           AS "Lvl 8 Effective",
+                            pos8.position_nbr    AS "Lvl 8 PosID",
+                            pos8.descr           AS "Lvl 8 Description",
+                            NULL                 AS "Lvl 9 Effective",
+                            NULL                 AS "Lvl 9 PosID",
+                            NULL                 AS "Lvl 9 Description"
+                        FROM
+                            ps_position_data pos8,
+                            (
+                                SELECT
+                                    "Lvl 0 PosID",
+                                    "Lvl 1 Effective",
+                                    "Lvl 1 PosID",
+                                    "Lvl 1 Description",
+                                    "Lvl 2 Effective",
+                                    "Lvl 2 PosID",
+                                    "Lvl 2 Description",
+                                    "Lvl 3 Effective",
+                                    "Lvl 3 PosID",
+                                    "Lvl 3 Description",
+                                    "Lvl 4 Effective",
+                                    "Lvl 4 PosID",
+                                    "Lvl 4 Description",
+                                    "Lvl 5 Effective",
+                                    "Lvl 5 PosID",
+                                    "Lvl 5 Description",
+                                    "Lvl 6 Effective",
+                                    "Lvl 6 PosID",
+                                    "Lvl 6 Description",
+                                    pos7.effdt           AS "Lvl 7 Effective",
+                                    pos7.position_nbr    AS "Lvl 7 PosID",
+                                    pos7.descr           AS "Lvl 7 Description",
+                                    NULL                 AS "Lvl 8 Effective",
+                                    NULL                 AS "Lvl 8 PosID",
+                                    NULL                 AS "Lvl 8 Description"
+                                FROM
+                                    ps_position_data pos7,
+                                    (
+                                        SELECT
+                                            "Lvl 0 PosID",
+                                            "Lvl 1 Effective",
+                                            "Lvl 1 PosID",
+                                            "Lvl 1 Description",
+                                            "Lvl 2 Effective",
+                                            "Lvl 2 PosID",
+                                            "Lvl 2 Description",
+                                            "Lvl 3 Effective",
+                                            "Lvl 3 PosID",
+                                            "Lvl 3 Description",
+                                            "Lvl 4 Effective",
+                                            "Lvl 4 PosID",
+                                            "Lvl 4 Description",
+                                            "Lvl 5 Effective",
+                                            "Lvl 5 PosID",
+                                            "Lvl 5 Description",
+                                            pos6.effdt           AS "Lvl 6 Effective",
+                                            pos6.position_nbr    AS "Lvl 6 PosID",
+                                            pos6.descr           AS "Lvl 6 Description",
+                                            NULL                 AS "Lvl 7 Effective",
+                                            NULL                 AS "Lvl 7 PosID",
+                                            NULL                 AS "Lvl 7 Description"
+                                        FROM
+                                            ps_position_data pos6,
+                                            (
+                                                SELECT
+                                                    "Lvl 0 PosID",
+                                                    "Lvl 1 Effective",
+                                                    "Lvl 1 PosID",
+                                                    "Lvl 1 Description",
+                                                    "Lvl 2 Effective",
+                                                    "Lvl 2 PosID",
+                                                    "Lvl 2 Description",
+                                                    "Lvl 3 Effective",
+                                                    "Lvl 3 PosID",
+                                                    "Lvl 3 Description",
+                                                    "Lvl 4 Effective",
+                                                    "Lvl 4 PosID",
+                                                    "Lvl 4 Description",
+                                                    pos5.effdt           AS "Lvl 5 Effective",
+                                                    pos5.position_nbr    AS "Lvl 5 PosID",
+                                                    pos5.descr           AS "Lvl 5 Description",
+                                                    NULL                 AS "Lvl 6 Effective",
+                                                    NULL                 AS "Lvl 6 PosID",
+                                                    NULL                 AS "Lvl 6 Description"
+                                                FROM
+                                                    ps_position_data pos5,
+                                                    (
+                                                        SELECT
+                                                            "Lvl 0 PosID",
+                                                            "Lvl 1 Effective",
+                                                            "Lvl 1 PosID",
+                                                            "Lvl 1 Description",
+                                                            "Lvl 2 Effective",
+                                                            "Lvl 2 PosID",
+                                                            "Lvl 2 Description",
+                                                            "Lvl 3 Effective",
+                                                            "Lvl 3 PosID",
+                                                            "Lvl 3 Description",
+                                                            pos4.effdt           AS "Lvl 4 Effective",
+                                                            pos4.position_nbr    AS "Lvl 4 PosID",
+                                                            pos4.descr           AS "Lvl 4 Description"
+                                                        FROM
+                                                            ps_position_data pos4,
+                                                            (
+                                                                SELECT
+                                                                    "Lvl 0 PosID",
+                                                                    "Lvl 1 Effective",
+                                                                    "Lvl 1 PosID",
+                                                                    "Lvl 1 Description",
+                                                                    "Lvl 2 Effective",
+                                                                    "Lvl 2 PosID",
+                                                                    "Lvl 2 Description",
+                                                                    pos3.effdt           AS "Lvl 3 Effective",
+                                                                    pos3.position_nbr    AS "Lvl 3 PosID",
+                                                                    pos3.descr           AS "Lvl 3 Description"
+                                                                FROM
+                                                                    ps_position_data pos3,
+                                                                    (
+                                                                        SELECT
+                                                                            "Lvl 0 PosID",
+                                                                            "Lvl 1 Effective",
+                                                                            "Lvl 1 PosID",
+                                                                            "Lvl 1 Description",
+                                                                            pos2.effdt           AS "Lvl 2 Effective",
+                                                                            pos2.position_nbr    AS "Lvl 2 PosID",
+                                                                            pos2.descr           AS "Lvl 2 Description"
+                                                                        FROM
+                                                                            ps_position_data pos2,
+                                                                            (
+                                                                                SELECT
+                                                                                    pos.reports_to      AS "Lvl 0 PosID",
+                                                                                    pos.effdt           AS "Lvl 1 Effective",
+                                                                                    pos.position_nbr    AS "Lvl 1 PosID",
+                                                                                    pos.descr           AS "Lvl 1 Description"
+                                                                                FROM
+                                                                                    ps_position_data pos
+                                                                                WHERE
+                                                                                        pos.reports_to = :hier_pos --00074582
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                AND
+                                                                                    pos.eff_status = 'A'
+                                                                                    AND pos.ac_non_empl_pos = 'N'
+                                                                                    AND pos.effdt = (
+                                                                                        SELECT
+                                                                                            MAX(posa.effdt)
+                                                                                        FROM
+                                                                                            cis_ncs_posn_work_tbl posa
+                                                                                        WHERE
+                                                                                                posa.position_nbr = pos.position_nbr
+                                                                                            AND posa.effdt <= :effdt
+                                                                                    )
+                                                                            )
+                                                                        WHERE
+                                                                                "Lvl 1 PosID" = pos2.reports_to (+)
+                                                                            AND pos2.reports_to <> :hier_pos
+                                                                            AND pos2.eff_status = 'A'
+                                                                            AND pos2.ac_non_empl_pos = 'N'
+                                                                            AND pos2.effdt = (
+                                                                                SELECT
+                                                                                    MAX(pos2a.effdt)
+                                                                                FROM
+                                                                                    ps_position_data pos2a
+                                                                                WHERE
+                                                                                        pos2a.position_nbr = pos2.position_nbr
+                                                                                    AND pos2a.effdt <= :effdt
+                                                                            )
+                                                                    )
+                                                                WHERE
+                                                                        "Lvl 2 PosID" = pos3.reports_to (+)
+                                                                    AND pos3.reports_to <> :hier_pos
+                                                                    AND pos3.eff_status = 'A'
+                                                                    AND pos3.ac_non_empl_pos = 'N'
+                                                                    AND pos3.effdt = (
+                                                                        SELECT
+                                                                            MAX(pos3a.effdt)
+                                                                        FROM
+                                                                            ps_position_data pos3a
+                                                                        WHERE
+                                                                                pos3a.position_nbr = pos3.position_nbr
+                                                                            AND pos3a.effdt <= :effdt
+                                                                    )
+                                                            )
+                                                        WHERE
+                                                                "Lvl 3 PosID" = pos4.reports_to (+)
+                                                            AND pos4.reports_to <> :hier_pos
+                                                            AND pos4.eff_status = 'A'
+                                                            AND pos4.ac_non_empl_pos = 'N'
+                                                            AND pos4.effdt = (
+                                                                SELECT
+                                                                    MAX(pos4a.effdt)
+                                                                FROM
+                                                                    ps_position_data pos4a
+                                                                WHERE
+                                                                        pos4a.position_nbr = pos4.position_nbr
+                                                                    AND pos4a.effdt <= :effdt
+                                                            )
+                                                    )
+                                                WHERE
+                                                        "Lvl 4 PosID" = pos5.reports_to (+)
+                                                    AND pos5.reports_to <> :hier_pos
+                                                    AND pos5.eff_status = 'A'
+                                                    AND pos5.ac_non_empl_pos = 'N'
+                                                    AND pos5.effdt = (
+                                                        SELECT
+                                                            MAX(pos5a.effdt)
+                                                        FROM
+                                                            ps_position_data pos5a
+                                                        WHERE
+                                                                pos5a.position_nbr = pos5.position_nbr
+                                                            AND pos5a.effdt <= :effdt
+                                                    )
+                                            )
+                                        WHERE
+                                                "Lvl 5 PosID" = pos6.reports_to (+)
+                                            AND pos6.reports_to <> :hier_pos
+                                            AND pos6.eff_status = 'A'
+                                            AND pos6.ac_non_empl_pos = 'N'
+                                            AND pos6.effdt = (
+                                                SELECT
+                                                    MAX(pos6a.effdt)
+                                                FROM
+                                                    ps_position_data pos6a
+                                                WHERE
+                                                        pos6a.position_nbr = pos6.position_nbr
+                                                    AND pos6a.effdt <= :effdt
+                                            )
+                                    )
+                                WHERE
+                                        "Lvl 6 PosID" = pos7.reports_to (+)
+                                    AND pos7.reports_to <> :hier_pos
+                                    AND pos7.eff_status = 'A'
+                                    AND pos7.ac_non_empl_pos = 'N'
+                                    AND pos7.effdt = (
+                                        SELECT
+                                            MAX(pos7a.effdt)
+                                        FROM
+                                            ps_position_data pos7a
+                                        WHERE
+                                                pos7a.position_nbr = pos7.position_nbr
+                                            AND pos7a.effdt <= :effdt
+                                    )
+                            )
+                        WHERE
+                                "Lvl 7 PosID" = pos8.reports_to (+)
+                            AND pos8.reports_to <> :hier_pos
+                            AND pos8.eff_status = 'A'
+                            AND pos8.ac_non_empl_pos = 'N'
+                            AND pos8.effdt = (
+                                SELECT
+                                    MAX(pos8a.effdt)
+                                FROM
+                                    ps_position_data pos8a
+                                WHERE
+                                        pos8a.position_nbr = pos8.position_nbr
+                                    AND pos8a.effdt <= :effdt
+                            )
+                        UNION
+--Pull level 9 positions
+                        SELECT
+                            "Lvl 0 PosID",
+                            "Lvl 1 Effective",
+                            "Lvl 1 PosID",
+                            "Lvl 1 Description",
+                            "Lvl 2 Effective",
+                            "Lvl 2 PosID",
+                            "Lvl 2 Description",
+                            "Lvl 3 Effective",
+                            "Lvl 3 PosID",
+                            "Lvl 3 Description",
+                            "Lvl 4 Effective",
+                            "Lvl 4 PosID",
+                            "Lvl 4 Description",
+                            "Lvl 5 Effective",
+                            "Lvl 5 PosID",
+                            "Lvl 5 Description",
+                            "Lvl 6 Effective",
+                            "Lvl 6 PosID",
+                            "Lvl 6 Description",
+                            "Lvl 7 Effective",
+                            "Lvl 7 PosID",
+                            "Lvl 7 Description",
+                            "Lvl 8 Effective",
+                            "Lvl 8 PosID",
+                            "Lvl 8 Description",
+                            pos9.effdt           AS "Lvl 9 Effective",
+                            pos9.position_nbr    AS "Lvl 9 PosID",
+                            pos9.descr           AS "Lvl 9 Description"
+                        FROM
+                            ps_position_data pos9,
+                            (
+                                SELECT
+                                    "Lvl 0 PosID",
+                                    "Lvl 1 Effective",
+                                    "Lvl 1 PosID",
+                                    "Lvl 1 Description",
+                                    "Lvl 2 Effective",
+                                    "Lvl 2 PosID",
+                                    "Lvl 2 Description",
+                                    "Lvl 3 Effective",
+                                    "Lvl 3 PosID",
+                                    "Lvl 3 Description",
+                                    "Lvl 4 Effective",
+                                    "Lvl 4 PosID",
+                                    "Lvl 4 Description",
+                                    "Lvl 5 Effective",
+                                    "Lvl 5 PosID",
+                                    "Lvl 5 Description",
+                                    "Lvl 6 Effective",
+                                    "Lvl 6 PosID",
+                                    "Lvl 6 Description",
+                                    "Lvl 7 Effective",
+                                    "Lvl 7 PosID",
+                                    "Lvl 7 Description",
+                                    pos8.effdt           AS "Lvl 8 Effective",
+                                    pos8.position_nbr    AS "Lvl 8 PosID",
+                                    pos8.descr           AS "Lvl 8 Description"
+                                FROM
+                                    ps_position_data pos8,
+                                    (
+                                        SELECT
+                                            "Lvl 0 PosID",
+                                            "Lvl 1 Effective",
+                                            "Lvl 1 PosID",
+                                            "Lvl 1 Description",
+                                            "Lvl 2 Effective",
+                                            "Lvl 2 PosID",
+                                            "Lvl 2 Description",
+                                            "Lvl 3 Effective",
+                                            "Lvl 3 PosID",
+                                            "Lvl 3 Description",
+                                            "Lvl 4 Effective",
+                                            "Lvl 4 PosID",
+                                            "Lvl 4 Description",
+                                            "Lvl 5 Effective",
+                                            "Lvl 5 PosID",
+                                            "Lvl 5 Description",
+                                            "Lvl 6 Effective",
+                                            "Lvl 6 PosID",
+                                            "Lvl 6 Description",
+                                            pos7.effdt           AS "Lvl 7 Effective",
+                                            pos7.position_nbr    AS "Lvl 7 PosID",
+                                            pos7.descr           AS "Lvl 7 Description",
+                                            NULL                 AS "Lvl 8 Effective",
+                                            NULL                 AS "Lvl 8 PosID",
+                                            NULL                 AS "Lvl 8 Description"
+                                        FROM
+                                            ps_position_data pos7,
+                                            (
+                                                SELECT
+                                                    "Lvl 0 PosID",
+                                                    "Lvl 1 Effective",
+                                                    "Lvl 1 PosID",
+                                                    "Lvl 1 Description",
+                                                    "Lvl 2 Effective",
+                                                    "Lvl 2 PosID",
+                                                    "Lvl 2 Description",
+                                                    "Lvl 3 Effective",
+                                                    "Lvl 3 PosID",
+                                                    "Lvl 3 Description",
+                                                    "Lvl 4 Effective",
+                                                    "Lvl 4 PosID",
+                                                    "Lvl 4 Description",
+                                                    "Lvl 5 Effective",
+                                                    "Lvl 5 PosID",
+                                                    "Lvl 5 Description",
+                                                    pos6.effdt           AS "Lvl 6 Effective",
+                                                    pos6.position_nbr    AS "Lvl 6 PosID",
+                                                    pos6.descr           AS "Lvl 6 Description",
+                                                    NULL                 AS "Lvl 7 Effective",
+                                                    NULL                 AS "Lvl 7 PosID",
+                                                    NULL                 AS "Lvl 7 Description"
+                                                FROM
+                                                    ps_position_data pos6,
+                                                    (
+                                                        SELECT
+                                                            "Lvl 0 PosID",
+                                                            "Lvl 1 Effective",
+                                                            "Lvl 1 PosID",
+                                                            "Lvl 1 Description",
+                                                            "Lvl 2 Effective",
+                                                            "Lvl 2 PosID",
+                                                            "Lvl 2 Description",
+                                                            "Lvl 3 Effective",
+                                                            "Lvl 3 PosID",
+                                                            "Lvl 3 Description",
+                                                            "Lvl 4 Effective",
+                                                            "Lvl 4 PosID",
+                                                            "Lvl 4 Description",
+                                                            pos5.effdt           AS "Lvl 5 Effective",
+                                                            pos5.position_nbr    AS "Lvl 5 PosID",
+                                                            pos5.descr           AS "Lvl 5 Description",
+                                                            NULL                 AS "Lvl 6 Effective",
+                                                            NULL                 AS "Lvl 6 PosID",
+                                                            NULL                 AS "Lvl 6 Description"
+                                                        FROM
+                                                            ps_position_data pos5,
+                                                            (
+                                                                SELECT
+                                                                    "Lvl 0 PosID",
+                                                                    "Lvl 1 Effective",
+                                                                    "Lvl 1 PosID",
+                                                                    "Lvl 1 Description",
+                                                                    "Lvl 2 Effective",
+                                                                    "Lvl 2 PosID",
+                                                                    "Lvl 2 Description",
+                                                                    "Lvl 3 Effective",
+                                                                    "Lvl 3 PosID",
+                                                                    "Lvl 3 Description",
+                                                                    pos4.effdt           AS "Lvl 4 Effective",
+                                                                    pos4.position_nbr    AS "Lvl 4 PosID",
+                                                                    pos4.descr           AS "Lvl 4 Description"
+                                                                FROM
+                                                                    ps_position_data pos4,
+                                                                    (
+                                                                        SELECT
+                                                                            "Lvl 0 PosID",
+                                                                            "Lvl 1 Effective",
+                                                                            "Lvl 1 PosID",
+                                                                            "Lvl 1 Description",
+                                                                            "Lvl 2 Effective",
+                                                                            "Lvl 2 PosID",
+                                                                            "Lvl 2 Description",
+                                                                            pos3.effdt           AS "Lvl 3 Effective",
+                                                                            pos3.position_nbr    AS "Lvl 3 PosID",
+                                                                            pos3.descr           AS "Lvl 3 Description"
+                                                                        FROM
+                                                                            ps_position_data pos3,
+                                                                            (
+                                                                                SELECT
+                                                                                    "Lvl 0 PosID",
+                                                                                    "Lvl 1 Effective",
+                                                                                    "Lvl 1 PosID",
+                                                                                    "Lvl 1 Description",
+                                                                                    pos2.effdt           AS "Lvl 2 Effective",
+                                                                                    pos2.position_nbr    AS "Lvl 2 PosID",
+                                                                                    pos2.descr           AS "Lvl 2 Description"
+                                                                                FROM
+                                                                                    ps_position_data pos2,
+                                                                                    (
+                                                                                        SELECT
+                                                                                            pos.reports_to      AS "Lvl 0 PosID",
+                                                                                            pos.effdt           AS "Lvl 1 Effective",
+                                                                                            pos.position_nbr    AS "Lvl 1 PosID",
+                                                                                            pos.descr           AS "Lvl 1 Description"
+                                                                                        FROM
+                                                                                            ps_position_data pos
+                                                                                        WHERE
+                                                                                                pos.reports_to = :hier_pos --00074582
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        AND
+                                                                                            pos.eff_status = 'A'
+                                                                                            AND pos.ac_non_empl_pos = 'N'
+                                                                                            AND pos.effdt = (
+                                                                                                SELECT
+                                                                                                    MAX(posa.effdt)
+                                                                                                FROM
+                                                                                                    cis_ncs_posn_work_tbl posa
+                                                                                                WHERE
+                                                                                                        posa.position_nbr = pos.position_nbr
+                                                                                                    AND posa.effdt <= :effdt
+                                                                                            )
+                                                                                    )
+                                                                                WHERE
+                                                                                        "Lvl 1 PosID" = pos2.reports_to (+)
+                                                                                    AND pos2.reports_to <> :hier_pos
+                                                                                    AND pos2.eff_status = 'A'
+                                                                                    AND pos2.ac_non_empl_pos = 'N'
+                                                                                    AND pos2.effdt = (
+                                                                                        SELECT
+                                                                                            MAX(pos2a.effdt)
+                                                                                        FROM
+                                                                                            ps_position_data pos2a
+                                                                                        WHERE
+                                                                                                pos2a.position_nbr = pos2.position_nbr
+                                                                                            AND pos2a.effdt <= :effdt
+                                                                                    )
+                                                                            )
+                                                                        WHERE
+                                                                                "Lvl 2 PosID" = pos3.reports_to (+)
+                                                                            AND pos3.reports_to <> :hier_pos
+                                                                            AND pos3.eff_status = 'A'
+                                                                            AND pos3.ac_non_empl_pos = 'N'
+                                                                            AND pos3.effdt = (
+                                                                                SELECT
+                                                                                    MAX(pos3a.effdt)
+                                                                                FROM
+                                                                                    ps_position_data pos3a
+                                                                                WHERE
+                                                                                        pos3a.position_nbr = pos3.position_nbr
+                                                                                    AND pos3a.effdt <= :effdt
+                                                                            )
+                                                                    )
+                                                                WHERE
+                                                                        "Lvl 3 PosID" = pos4.reports_to (+)
+                                                                    AND pos4.reports_to <> :hier_pos
+                                                                    AND pos4.eff_status = 'A'
+                                                                    AND pos4.ac_non_empl_pos = 'N'
+                                                                    AND pos4.effdt = (
+                                                                        SELECT
+                                                                            MAX(pos4a.effdt)
+                                                                        FROM
+                                                                            ps_position_data pos4a
+                                                                        WHERE
+                                                                                pos4a.position_nbr = pos4.position_nbr
+                                                                            AND pos4a.effdt <= :effdt
+                                                                    )
+                                                            )
+                                                        WHERE
+                                                                "Lvl 4 PosID" = pos5.reports_to (+)
+                                                            AND pos5.reports_to <> :hier_pos
+                                                            AND pos5.eff_status = 'A'
+                                                            AND pos5.ac_non_empl_pos = 'N'
+                                                            AND pos5.effdt = (
+                                                                SELECT
+                                                                    MAX(pos5a.effdt)
+                                                                FROM
+                                                                    ps_position_data pos5a
+                                                                WHERE
+                                                                        pos5a.position_nbr = pos5.position_nbr
+                                                                    AND pos5a.effdt <= :effdt
+                                                            )
+                                                    )
+                                                WHERE
+                                                        "Lvl 5 PosID" = pos6.reports_to (+)
+                                                    AND pos6.reports_to <> :hier_pos
+                                                    AND pos6.eff_status = 'A'
+                                                    AND pos6.ac_non_empl_pos = 'N'
+                                                    AND pos6.effdt = (
+                                                        SELECT
+                                                            MAX(pos6a.effdt)
+                                                        FROM
+                                                            ps_position_data pos6a
+                                                        WHERE
+                                                                pos6a.position_nbr = pos6.position_nbr
+                                                            AND pos6a.effdt <= :effdt
+                                                    )
+                                            )
+                                        WHERE
+                                                "Lvl 6 PosID" = pos7.reports_to (+)
+                                            AND pos7.reports_to <> :hier_pos
+                                            AND pos7.eff_status = 'A'
+                                            AND pos7.ac_non_empl_pos = 'N'
+                                            AND pos7.effdt = (
+                                                SELECT
+                                                    MAX(pos7a.effdt)
+                                                FROM
+                                                    ps_position_data pos7a
+                                                WHERE
+                                                        pos7a.position_nbr = pos7.position_nbr
+                                                    AND pos7a.effdt <= :effdt
+                                            )
+                                    )
+                                WHERE
+                                        "Lvl 7 PosID" = pos8.reports_to (+)
+                                    AND pos8.reports_to <> :hier_pos
+                                    AND pos8.eff_status = 'A'
+                                    AND pos8.ac_non_empl_pos = 'N'
+                                    AND pos8.effdt = (
+                                        SELECT
+                                            MAX(pos8a.effdt)
+                                        FROM
+                                            ps_position_data pos8a
+                                        WHERE
+                                                pos8a.position_nbr = pos8.position_nbr
+                                            AND pos8a.effdt <= :effdt
+                                    )
+                            )
+                        WHERE
+                                "Lvl 8 PosID" = pos9.reports_to (+)
+                            AND pos9.reports_to <> :hier_pos
+                            AND pos9.eff_status = 'A'
+                            AND pos9.ac_non_empl_pos = 'N'
+                            AND pos9.effdt = (
+                                SELECT
+                                    MAX(pos9a.effdt)
+                                FROM
+                                    ps_position_data pos9a
+                                WHERE
+                                        pos9a.position_nbr = pos9.position_nbr
+                                    AND pos9a.effdt <= :effdt
+                            )
+                    )
+            )
+        WHERE
+                jobs.per_org = 'EMP'
+            AND jobs.empl_status IN ( 'A', 'L', 'P' )
+            AND jobs.action_reason <> 'ACQ'
+            AND jobs.effseq = (
+                SELECT
+                    MAX(jobs3.effseq)
+                FROM
+                    ps_job jobs3
+                WHERE
+                        jobs.emplid = jobs3.emplid
+                    AND jobs3.effdt = jobs.effdt
+            )
+            AND jobs.effdt = (
+                SELECT
+                    MAX(jobs2.effdt)
+                FROM
+                    ps_job jobs2
+                WHERE
+                        jobs.emplid = jobs2.emplid
+                    AND jobs2.effdt <= :effdt
+            )
+            AND jobs.position_nbr = "Position"
+        GROUP BY
+            "Lvl 1 PosID",          --Change level here
+            "Lvl 1 Description"     --Change level here
+    ),
+    (--Names from position number
+        SELECT
+            jobs.position_nbr    AS "NamePos",
+            jobs.emplid          AS "NameEmp",
+            empall.name          AS "Leader Name",
+            empall.emplid as "RESEARCH"
+        FROM
+            ps_job           jobs,
+            ps_ac_empls_all  empall
+        WHERE
+                jobs.per_org = 'EMP'
+            AND jobs.empl_status IN ( 'A', 'L', 'P' )
+            AND jobs.action_reason <> 'ACQ'
+            AND jobs.emplid = empall.emplid
+            AND jobs.effseq = (
+                SELECT
+                    MAX(jobs3.effseq)
+                FROM
+                    ps_job jobs3
+                WHERE
+                        jobs.emplid = jobs3.emplid
+                    AND jobs3.effdt = jobs.effdt
+            )
+            AND jobs.effdt = (
+                SELECT
+                    MAX(jobs2.effdt)
+                FROM
+                    ps_job jobs2
+                WHERE
+                        jobs.emplid = jobs2.emplid
+                    AND jobs2.effdt <= :effdt
+            )
+    )
+WHERE
+    "NamePos" = "Lvl 1 PosID"; --Change level here
