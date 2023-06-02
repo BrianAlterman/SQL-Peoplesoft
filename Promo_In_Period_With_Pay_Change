@@ -1,0 +1,15 @@
+SELECT
+    job.emplid               AS "EIN",
+    job.effdt                AS "Effective Date",
+    job.action_reason        AS "Change Reason",
+    job.sal_admin_plan       AS "Sal Admin Plan",
+    job.change_amt           AS "Change $",
+    job.change_pct           AS "Change %",
+    job.flsa_status          AS "FLSA", -- E/N
+    job.change_amt * 2080    AS "Raise Amount"
+FROM
+    ps_job job
+WHERE
+    job.effdt BETWEEN '01-jan-2022' AND '31-dec-2022'
+    AND job.change_amt <> '0'
+    AND job.action_reason = 'PRO'
