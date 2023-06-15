@@ -1,0 +1,60 @@
+--Count of Employees by tenure buckets (1st year) as of VARIABLE_DATE
+SELECT
+    CASE
+        WHEN to_date(:as_of_date) - emp.service_dt < 92 THEN
+            'A - 0 to 3 Months'
+        WHEN to_date(:as_of_date) - emp.service_dt > 92
+             AND to_date(:as_of_date) - emp.service_dt < 183 THEN
+            'B - 3 to 6 Months'
+        WHEN to_date(:as_of_date) - emp.service_dt > 183
+             AND to_date(:as_of_date) - emp.service_dt < 274 THEN
+            'C - 6 to 9 Months'
+        WHEN to_date(:as_of_date) - emp.service_dt > 274
+             AND to_date(:as_of_date) - emp.service_dt < 365 THEN
+            'C - 9 to 12 Months'
+        ELSE
+            'D - Greater than 12 Months'
+    END AS "Term Bucket",
+    COUNT(jobs.emplid)
+FROM
+    ps_job           jobs,
+    ps_ac_all_empls  emp
+WHERE
+        jobs.per_org = 'EMP'
+    AND jobs.emplid = emp.emplid (+)
+    AND jobs.empl_status IN ( 'A', 'L', 'P' )
+    AND jobs.action_reason <> 'ACQ'
+    AND jobs.effseq = (
+        SELECT
+            MAX(jobs3.effseq)
+        FROM
+            ps_job jobs3
+        WHERE
+                jobs.emplid = jobs3.emplid
+            AND jobs3.effdt = jobs.effdt
+    )
+    AND jobs.effdt = (
+        SELECT
+            MAX(jobs2.effdt)
+        FROM
+            ps_job jobs2
+        WHERE
+                jobs.emplid = jobs2.emplid
+            AND jobs2.effdt <= :as_of_date
+    )
+GROUP BY
+    CASE
+        WHEN to_date(:as_of_date) - emp.service_dt < 92 THEN
+            'A - 0 to 3 Months'
+        WHEN to_date(:as_of_date) - emp.service_dt > 92
+             AND to_date(:as_of_date) - emp.service_dt < 183 THEN
+            'B - 3 to 6 Months'
+        WHEN to_date(:as_of_date) - emp.service_dt > 183
+             AND to_date(:as_of_date) - emp.service_dt < 274 THEN
+            'C - 6 to 9 Months'
+        WHEN to_date(:as_of_date) - emp.service_dt > 274
+             AND to_date(:as_of_date) - emp.service_dt < 365 THEN
+            'C - 9 to 12 Months'
+        ELSE
+            'D - Greater than 12 Months'
+    END;
