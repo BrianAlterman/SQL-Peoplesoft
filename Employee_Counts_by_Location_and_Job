@@ -1,0 +1,32 @@
+/* year end headcount query for each year from 2013 through 2022
+Job Codes (jobcode):
+10432	Tech-Network Trans/2
+850815	Customer Service Technician
+850803	Cable Technician
+10810	Business Systems Tech II
+10412	Tech-Digital Svcs/2
+10836	Special Service Test Tech
+10435	Tech-Network Switch/2
+860808	Network Technician
+10658	Customer Service Tech II
+036037	Sr Network Technician
+12116	Service Technician
+036027	Network Technician II
+10725	Business System Technician II
+12109	Central Office Technician
+12108	Business Systems Technician
+States:
+Nebraska */
+select count(jobs.emplid) 
+from ps_job jobs, 
+     ps_location_tbl loc 
+where jobs.per_org = 'EMP'
+and jobs.empl_status in ('A','L','P')
+and jobs.action_reason <> 'ACQ'
+and jobs.effseq = (select max(jobs3.effseq) from ps_job jobs3 where jobs.emplid = jobs3.emplid and jobs3.effdt = jobs.effdt)
+and jobs.effdt = (select max(jobs2.effdt) from ps_job jobs2 where jobs.emplid = jobs2.emplid and jobs2.effdt <= :AS_OF_DATE )
+and jobs.ac_mail_location = loc.location
+and loc.effdt = (select max(loc2.effdt) from ps_location_tbl loc2 where loc2.location = loc.location and loc2.effdt <= :AS_OF_DATE)
+and loc.state = 'NE'
+and jobs.jobcode in ('10432','850815','850803','10810','10412','10836','10435','860808','10658','036037',
+'12116','036027','10725','12109','12108');
