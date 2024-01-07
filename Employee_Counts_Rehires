@@ -1,0 +1,45 @@
+--On PS_JOB, fields are LAST_HIRE_DT and HIRE_DT
+--Count of Employees as of VARIABLE_DATE
+SELECT
+    CASE
+        WHEN last_hire_dt IS NULL THEN
+            'Hire'
+        WHEN last_hire_dt IS NOT NULL THEN
+            'Rehire'
+        ELSE
+            'ERROR'
+    END                      AS "Type",
+    COUNT(jobs.emplid)       AS "Count"
+FROM
+    ps_job jobs
+WHERE
+        jobs.per_org = 'EMP'
+    AND jobs.empl_status IN ( 'A', 'L', 'P' )
+    AND jobs.action_reason <> 'ACQ'
+    AND jobs.effseq = (
+        SELECT
+            MAX(jobs3.effseq)
+        FROM
+            ps_job jobs3
+        WHERE
+                jobs.emplid = jobs3.emplid
+            AND jobs3.effdt = jobs.effdt
+    )
+    AND jobs.effdt = (
+        SELECT
+            MAX(jobs2.effdt)
+        FROM
+            ps_job jobs2
+        WHERE
+                jobs.emplid = jobs2.emplid
+            AND jobs2.effdt <= :as_of_date
+    )
+GROUP BY
+    CASE
+        WHEN last_hire_dt IS NULL THEN
+            'Hire'
+        WHEN last_hire_dt IS NOT NULL THEN
+            'Rehire'
+        ELSE
+            'ERROR'
+    END;
