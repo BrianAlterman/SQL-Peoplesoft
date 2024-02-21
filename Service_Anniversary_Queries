@@ -1,0 +1,115 @@
+SELECT
+    peo.emplid                                                 AS "Employee ID",
+    peo.name                                                   AS "Full Name",
+    peo.service_dt                                             AS "Service Date",
+    CASE
+        WHEN substr(peo.service_dt, 1, length(peo.service_dt) - 3)
+             || '-'
+             || to_char(sysdate, 'YYYY') < sysdate THEN
+            substr(peo.service_dt, 1, length(peo.service_dt) - 3)
+            || '-'
+            || ( to_char(sysdate, 'YYYY') + 1 )
+        ELSE
+            substr(peo.service_dt, 1, length(peo.service_dt) - 3)
+            || '-'
+            || to_char(sysdate, 'YYYY')
+    END                                                        AS "Next Anniversary",
+    to_char(to_date(
+        CASE
+            WHEN substr(peo.service_dt, 1, length(peo.service_dt) - 3)
+                 || '-'
+                 || to_char(sysdate, 'YYYY') < sysdate THEN
+                substr(peo.service_dt, 1, length(peo.service_dt) - 3)
+                || '-'
+                ||(to_char(sysdate, 'YYYY') + 1)
+            ELSE
+                substr(peo.service_dt, 1, length(peo.service_dt) - 3)
+                || '-'
+                || to_char(sysdate, 'YYYY')
+        END,
+        'DD-MON-YYYY'),
+            'YYYY') - EXTRACT(YEAR FROM peo.service_dt)        AS "years"
+FROM
+    ps_employees peo
+WHERE
+    emplid IN ( '0182265', '0115855' );
+
+SELECT
+    peo.emplid                                                         AS "Employee ID",
+    peo.name                                                           AS "Full Name",
+    peo.service_dt                                                     AS "Service Date",
+    substr(peo.service_dt, 1, length(peo.service_dt) - 3)                AS "Year Removed",
+    to_char(sysdate, 'YYYY')                                           AS "Current Year",
+    substr(peo.service_dt, 1, length(peo.service_dt) - 3)
+    || '-'
+    || to_char(sysdate, 'YYYY')                                         AS " Current Year Anniversary",
+    CASE
+        WHEN substr(peo.service_dt, 1, length(peo.service_dt) - 3)
+             || '-'
+             || to_char(sysdate, 'YYYY') < sysdate THEN
+            'Past'
+        ELSE
+            'Future'
+    END                                                                AS "Case",
+    to_char(sysdate, 'YYYY') + 1                                         AS "Next Year",
+    CASE
+        WHEN substr(peo.service_dt, 1, length(peo.service_dt) - 3)
+             || '-'
+             || to_char(sysdate, 'YYYY') < sysdate THEN
+            substr(peo.service_dt, 1, length(peo.service_dt) - 3)
+            || '-'
+            || ( to_char(sysdate, 'YYYY') + 1 )
+        ELSE
+            substr(peo.service_dt, 1, length(peo.service_dt) - 3)
+            || '-'
+            || to_char(sysdate, 'YYYY')
+    END                                                                AS "Next Anniversary",
+    to_date(
+        CASE
+            WHEN substr(peo.service_dt, 1, length(peo.service_dt) - 3)
+                 || '-'
+                 || to_char(sysdate, 'YYYY') < sysdate THEN
+                substr(peo.service_dt, 1, length(peo.service_dt) - 3)
+                || '-'
+                ||(to_char(sysdate, 'YYYY') + 1)
+            ELSE
+                substr(peo.service_dt, 1, length(peo.service_dt) - 3)
+                || '-'
+                || to_char(sysdate, 'YYYY')
+        END,
+        'DD-MON-YYYY') - service_dt                                AS "Date Format",
+    to_char(to_date(
+        CASE
+            WHEN substr(peo.service_dt, 1, length(peo.service_dt) - 3)
+                 || '-'
+                 || to_char(sysdate, 'YYYY') < sysdate THEN
+                substr(peo.service_dt, 1, length(peo.service_dt) - 3)
+                || '-'
+                ||(to_char(sysdate, 'YYYY') + 1)
+            ELSE
+                substr(peo.service_dt, 1, length(peo.service_dt) - 3)
+                || '-'
+                || to_char(sysdate, 'YYYY')
+        END,
+        'DD-MON-YYYY'),
+            'YYYY')                                                    AS "Anniversary Year",
+    EXTRACT(YEAR FROM peo.service_dt)                                  AS "Svc Year",
+    to_char(to_date(
+        CASE
+            WHEN substr(peo.service_dt, 1, length(peo.service_dt) - 3)
+                 || '-'
+                 || to_char(sysdate, 'YYYY') < sysdate THEN
+                substr(peo.service_dt, 1, length(peo.service_dt) - 3)
+                || '-'
+                ||(to_char(sysdate, 'YYYY') + 1)
+            ELSE
+                substr(peo.service_dt, 1, length(peo.service_dt) - 3)
+                || '-'
+                || to_char(sysdate, 'YYYY')
+        END,
+        'DD-MON-YYYY'),
+            'YYYY') - EXTRACT(YEAR FROM peo.service_dt)                AS "years"
+FROM
+    ps_employees peo
+WHERE
+    emplid IN ( '0182265', '0115855' );
