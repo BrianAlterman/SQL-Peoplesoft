@@ -1,0 +1,39 @@
+SELECT
+    jobs.emplid,
+    c.company,
+    c.descr
+FROM
+    ps_job jobs,
+    ps_company_tbl c
+WHERE
+        jobs.per_org = 'EMP'
+    AND jobs.empl_status IN ( 'A', 'L', 'P' )
+    AND jobs.action_reason <> 'ACQ'
+    AND jobs.effseq = (
+        SELECT
+            MAX(jobs3.effseq)
+        FROM
+            ps_job jobs3
+        WHERE
+                jobs.emplid = jobs3.emplid
+            AND jobs3.effdt = jobs.effdt
+    )
+    AND jobs.effdt = (
+        SELECT
+            MAX(jobs2.effdt)
+        FROM
+            ps_job jobs2
+        WHERE
+                jobs.emplid = jobs2.emplid
+            AND jobs2.effdt <= :as_of_date
+    )
+    AND c.company = jobs.company
+    AND c.effdt = (
+        SELECT
+            MAX(c_ed.effdt)
+        FROM
+            ps_company_tbl c_ed
+        WHERE
+                c.company = c_ed.company
+            AND c_ed.effdt <= jobs.effdt
+    );
