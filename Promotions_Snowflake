@@ -1,0 +1,43 @@
+CREATE OR REPLACE TABLE PS_PROMOTION_DATA as
+select jb.emplid,jb.action_reason,jb.effdt,p.name,jb.jobcode,d.descr,jb.location,jb.deptid,jb.grade,jb.reports_to,pd.ac_business_unit
+--select count(distinct(jb.emplid))
+from ps_job jb, ps_personal_data p, ps_jobcode_tbl d, ps_position_data pd
+where jb.emplid not like 'V%'
+  and jb.emplid = p.emplid
+  and jb.jobcode = d.jobcode
+  and jb.action_reason = 'PRO'
+  and jb.position_nbr = pd.position_nbr
+  and jb.effdt between '2024-01-01' and '2024-03-24'
+  and d.SETID = 'COMMN'
+  AND D.EFFDT = (SELECT MAX(J.EFFDT) FROM PS_JOBCODE_TBL J
+               WHERE J.JOBCODE = D.JOBCODE
+          AND J.SETID = D.SETID
+                      AND J.EFFDT <= jb.effdt)
+  AND PD.EFFDT = (SELECT MAX(PD2.EFFDT) FROM PS_POSITION_DATA PD2
+       WHERE  PD2.POSITION_NBR = PD.POSITION_NBR
+         AND  PD2.EFFDT <= jb.effdt);
+
+insert into ps_promotion_data 
+select jb.emplid,jb.action_reason,jb.effdt,p.name,jb.jobcode,d.descr,jb.location,jb.deptid,jb.grade,jb.reports_to,pd.ac_business_unit  
+from ps_job jb, ps_personal_data p, ps_jobcode_tbl d, ps_position_data pd,ps_promotion_data pro
+where jb.emplid = pro.emplid
+  and jb.emplid = p.emplid
+  and jb.position_nbr = pd.position_nbr  
+  and jb.jobcode <> pro.jobcode
+  and jb.jobcode = d.jobcode
+  and JB.EFFDT = (SELECT MAX(J.EFFDT) FROM PS_JOB J
+                       WHERE J.EMPLID     = JB.EMPLID
+                         AND J.EMPL_RCD   = JB.EMPL_RCD
+                         AND j.effdt     < pro.effdt)
+  and JB.EFFSEQ = (SELECT MAX(JO.EFFSEQ) FROM PS_JOB JO
+                       WHERE JO.EMPLID   = JB.EMPLID
+                         AND JO.EMPL_RCD = JB.EMPL_RCD
+                         AND JO.EFFDT    = JB.EFFDT)
+  and d.SETID = 'COMMN'
+  AND D.EFFDT = (SELECT MAX(J.EFFDT) FROM PS_JOBCODE_TBL J
+               WHERE J.JOBCODE = D.JOBCODE
+          AND J.SETID = D.SETID
+                      AND J.EFFDT <= jb.effdt)
+  AND PD.EFFDT = (SELECT MAX(PD2.EFFDT) FROM PS_POSITION_DATA PD2
+       WHERE  PD2.POSITION_NBR = PD.POSITION_NBR
+         AND  PD2.EFFDT <= jb.effdt);
