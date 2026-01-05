@@ -1,0 +1,30 @@
+select job.emplid   as "EIN",
+       job.location as "Location Code",
+       loc.descr as "Location Name",
+       loc.city as "Location City",
+       loc.state as "Location State",
+       job.jobcode as "Job Code",
+       jc.descr as "Job Title",
+       job.empl_status as "Status",
+       job.action as "Action",
+       job.action_reason as "Reason",
+       job.effdt as "Effective Date",
+       job.reg_temp as "Reg/Temp",
+       job.full_part_time as "FT/PT",
+       job.flsa_status as "FLSA",
+       job.supervisor_id as "MGR EIN"
+from PS_JOB job,
+     PS_LOCATION_TBL loc,
+     PS_JOBCODE_TBL jc
+where job.location = loc.location
+and job.jobcode = jc.jobcode
+and jc.eff_status = 'A'
+and jc.effdt = (select max(jc2.effdt)
+                 from PS_JOBCODE_TBL jc2
+                 where jc.jobcode = jc2.jobcode)
+and loc.eff_status='A'
+and loc.state = 'CA'
+--and job.empl_status <>'T'
+and loc.effdt = (select max(loc2.effdt)
+                 from PS_LOCATION_TBL loc2
+                 where loc.location = loc2.location)
