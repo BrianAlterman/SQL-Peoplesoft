@@ -1,0 +1,82 @@
+select
+    e.name as "Employee Name",
+    j.emplid as "Emp ID",
+    j.effdt as "Effective Date",
+    j.jobcode as "Job Code",
+    jt.descr as "Job Title",
+    e2.name as "Supervisor Name",
+    j.supervisor_id as "Supervisor ID",
+    j.empl_status as "Emp Status",
+    j.action as "Action",
+    ac.action_descr as "Action Description",
+    j.full_part_time as "FT/PT",
+    j.empl_type as "Pay Type",
+    j.hourly_rt as "Hourly Pay Rate",
+    j.annual_rt as "Annual Pay Rate",
+    j.grade as "Pay Grade",
+    j.UNION_CD as "Union Code",
+    j.barg_unit as "Bargaining Unit",
+    u.descr as "Union Description",
+    j.location,
+    loc.descr
+from
+    PPLSOFT.PPLSOFT.PS_JOB j,
+    ps_ac_all_empls e,
+    ps_ac_all_empls e2,
+    PPLSOFT.PPLSOFT.PS_LOCATION_TBL loc,
+    PPLSOFT.PPLSOFT.PS_ACTION_TBL ac,
+    (
+        select
+            jt.jobcode as "MATJC",
+            jt.descr
+        from
+            PPLSOFT.PPLSOFT.PS_JOBCODE_TBL jt
+        where
+            jt.effdt = (
+                select
+                    max(jt2.effdt)
+                from
+                    PPLSOFT.PPLSOFT.PS_JOBCODE_TBL jt2
+                where
+                    jt2.jobcode = jt.jobcode
+            )
+    ) jt,
+    (
+        select
+            distinct u.union_cd as "MAT_UC",
+            u.barg_unit as "MAT_BARG",
+            u.descr
+        from
+            PPLSOFT.PPLSOFT.PS_AC_BARG_UNIT u
+        where
+            u.eff_status = 'A'
+            and u.contract_begin_dt =(
+                select
+                    max(u2.contract_begin_dt)
+                from
+                    PPLSOFT.PPLSOFT.PS_AC_BARG_UNIT u2
+                where
+                    u.union_cd = u2.union_cd
+                    and u.barg_unit = u2.barg_unit
+            )
+    ) u
+where
+    e.emplid = '0175262'
+    and j.emplid = e.emplid
+    and j.jobcode = "MATJC"
+    and e2.emplid = j.supervisor_id
+    and ac.action = j.action
+    and j.union_cd = "MAT_UC"
+    and j.barg_unit = "MAT_BARG"
+    and j.location = loc.location
+    and loc.effdt = (
+        select
+            max(loc2.effdt)
+        from
+            PPLSOFT.PPLSOFT.PS_LOCATION_TBL loc2
+        where
+            loc.location = loc2.location
+            and loc2.effdt <= j.effdt
+    )
+order by
+    j.effdt asc;
