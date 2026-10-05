@@ -66,8 +66,8 @@ where
     and j.jobcode = "MATJC"
     and e2.emplid = j.supervisor_id
     and ac.action = j.action
-    and j.union_cd = "MAT_UC"
-    and j.barg_unit = "MAT_BARG"
+    and j.union_cd = "MAT_UC" (+)
+    and j.barg_unit = "MAT_BARG" (+)
     and j.location = loc.location
     and loc.effdt = (
         select
